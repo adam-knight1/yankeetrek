@@ -14,6 +14,8 @@ public class ExampleCreateRequest {
         return name;
     }
 
+    //testing branches --adam
+
     public void setName(String name) {
         this.name = name;
     }
