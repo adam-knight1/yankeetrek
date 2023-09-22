@@ -1,2 +1,4 @@
-package com.kenzie.appserver.repositories.model;public class CommentRepository {
+package com.kenzie.appserver.repositories.model;
+
+public class CommentRepository {
 }

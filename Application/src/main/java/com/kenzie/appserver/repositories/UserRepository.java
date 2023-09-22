@@ -1,2 +1,5 @@
-package com.kenzie.appserver.repositories;public class UserRepository {
+package com.kenzie.appserver.repositories;
+
+public class UserRepository {
+    //added by adam
 }
