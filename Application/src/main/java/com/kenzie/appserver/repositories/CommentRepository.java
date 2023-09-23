@@ -1,4 +1,12 @@
 package com.kenzie.appserver.repositories;
 
-public class CommentRepository {
+import com.kenzie.appserver.repositories.model.CommentRecord;
+import org.springframework.data.repository.CrudRepository;
+
+public interface CommentRepository extends CrudRepository<CommentRecord, String> {
+
+
+
+
 }
+

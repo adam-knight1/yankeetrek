@@ -2,25 +2,36 @@ package com.kenzie.appserver.service.model;
 
 public class Comment {
     //added by adam
+    private final String commentId;
+    private final String ownerId;
+    private final String title;
+    private final String content;
+    private final String chatRoomId;
 
-        private final String commentId;
-        private final String owner;
-        private final String title;
-        private final String content;
-
-        public Comment(String commentId, String owner, String title, String content) {
-            this.commentId = commentId;
-            this.owner = owner;
-            this.title = title;
-            this.content = content;
-        }
-
-        public String getId() { return this.commentId; }
-
-        public String getOwner() { return this.owner; }
-
-        public String getTitle() { return this.title; }
-
-        public String getContent() { return this.content; }
+    public Comment(String commentId, String ownerId, String title, String content, String chatRoomId) {
+        this.commentId = commentId;
+        this.ownerId = ownerId;
+        this.title = title;
+        this.content = content;
+        this.chatRoomId = chatRoomId;
     }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
+
+
 

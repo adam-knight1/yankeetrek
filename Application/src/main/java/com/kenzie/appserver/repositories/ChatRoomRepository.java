@@ -1,5 +1,5 @@
 package com.kenzie.appserver.repositories;
 
-public class ChatRoomRepository {
+public interface ChatRoomRepository {
     //added by adam
 }
