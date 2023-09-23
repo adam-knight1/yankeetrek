@@ -4,8 +4,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+import java.util.Objects;
 
-    @DynamoDBTable(tableName = "Comment")
+
+@DynamoDBTable(tableName = "Comment")
     public class CommentRecord {
 
         @DynamoDBHashKey
@@ -62,7 +64,20 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
         public void setTitle(String title) {
             this.title = title;
         }
+
+    @Override
+    public boolean equals(Object o) {  // we can change what this compares if need be -adam
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommentRecord that = (CommentRecord) o;
+        return Objects.equals(commentId, that.commentId) && Objects.equals(ownerId, that.ownerId);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(commentId, ownerId);
+    }
+}
 
 
 

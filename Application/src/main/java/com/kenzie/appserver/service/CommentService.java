@@ -13,6 +13,8 @@ import java.util.List;
     public class CommentService {
         private CommentRepository commentRepository;
 
+        //maybe incorporate cache here?
+
         @Autowired
         public CommentService(CommentRepository commentRepository) { this.commentRepository = commentRepository; }
 

@@ -31,6 +31,10 @@ public class Comment {
     public String getContent() {
         return content;
     }
+
+    public String getChatRoomId() {
+        return chatRoomId;
+    }
 }
 
 
