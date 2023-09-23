@@ -1,4 +1,10 @@
 package com.kenzie.appserver.repositories;
 
-public class CommentRepository {
+import com.kenzie.appserver.repositories.model.CommentRecord;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import org.springframework.data.repository.CrudRepository;
+@EnableScan
+public interface CommentRepository extends CrudRepository<CommentRecord, String> {
+
 }
+

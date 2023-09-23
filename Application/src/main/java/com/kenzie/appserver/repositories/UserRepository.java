@@ -1,5 +1,5 @@
 package com.kenzie.appserver.repositories;
 
-public class UserRepository {
+public interface UserRepository {
     //added by adam
 }
