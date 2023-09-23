@@ -3,7 +3,7 @@ package com.kenzie.appserver.service.model;
 import java.util.UUID;
 
 public class User {
-    //just testing git branching - adam
+    //created by adam
     UUID userID;
     String username;
     String password;

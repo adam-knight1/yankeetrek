@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package main {
+package controller{
+class CommentController
+class BaseController
+class UserController
+class CommentRoomController
+class FriendsListController
+package model {
+}
+    }
+
+package service {
+
+class CommentService
+class CommentRoomService
+class UserService
+package model {
+class User {
+String userID
+String username
+String email
+String password
+}
+    }
+        }
+
+package Repositories {
+
+Interface CommentRepository
+Interface ChatRoomRepository
+Interface UserRepository
+Interface FriendsListRepository
+package model{
+class CommentRecord
+class UserRecord
+class FriendsListRecord
+class ChatRoomRecord
+}
+    }
+        }
+            }
+
+
+
+@enduml
