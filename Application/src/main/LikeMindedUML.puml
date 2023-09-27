@@ -39,7 +39,10 @@ package model{
 class CommentRecord
 class UserRecord
 class FriendsListRecord
-class ChatRoomRecord
+class ChatRoomRecord{
+- String userID
+- String message
+- Long timeStamp
 }
     }
         }
