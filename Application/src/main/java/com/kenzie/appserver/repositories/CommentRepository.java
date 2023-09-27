@@ -8,6 +8,5 @@ import java.util.List;
 
 @EnableScan
 public interface CommentRepository extends CrudRepository<CommentRecord, String> {
-
 }
 
