@@ -9,14 +9,16 @@ class UserController
 class CommentRoomController
 class FriendsListController
 package model {
+class comment
 }
     }
 
 package service {
 
 class CommentService
-class CommentRoomService
+class ChatRoomService
 class UserService
+class FriendsListService
 package model {
 class User {
 String userID
