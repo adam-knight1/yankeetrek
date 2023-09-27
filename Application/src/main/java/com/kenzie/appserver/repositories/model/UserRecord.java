@@ -21,7 +21,7 @@ import java.util.UUID;
     private String password;
 
     @DynamoDBAttribute(attributeName = "hobbies")
-    private ArrayList hobbies;
+    private ArrayList<String> hobbies;
 
     @DynamoDBAttribute(attributeName = "email")
     private String email;
