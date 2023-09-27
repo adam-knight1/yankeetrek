@@ -2,6 +2,7 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import java.util.UUID;
 
     @DynamoDBHashKey
     private UUID userId;
+
+    @DynamoDBRangeKey(attributeName = "email")
+    private String email;
 
     @DynamoDBAttribute
     private String username;
