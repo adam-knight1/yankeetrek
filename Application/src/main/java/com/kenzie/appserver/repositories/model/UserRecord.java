@@ -14,6 +14,9 @@ import java.util.UUID;
     @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
 
+    @DynamoDBAttribute(attributeName = "email")
+    private String email;
+
     @DynamoDBAttribute(attributeName = "username")
     private String username;
 
@@ -22,9 +25,6 @@ import java.util.UUID;
 
     @DynamoDBAttribute(attributeName = "hobbies")
     private ArrayList<String> hobbies;
-
-    @DynamoDBAttribute(attributeName = "email")
-    private String email;
 
     public UUID getUserId() {
         return userId;
