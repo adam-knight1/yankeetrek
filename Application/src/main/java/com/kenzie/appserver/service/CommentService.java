@@ -3,14 +3,18 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.repositories.CommentRepository;
 import com.kenzie.appserver.repositories.model.CommentRecord;
 import com.kenzie.appserver.service.model.Comment;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-    @Service
+@Service
     public class CommentService {
+
+
         private CommentRepository commentRepository;
 
         //maybe incorporate cache here?
