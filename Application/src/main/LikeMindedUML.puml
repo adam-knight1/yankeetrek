@@ -9,14 +9,16 @@ class UserController
 class CommentRoomController
 class FriendsListController
 package model {
+class comment
 }
     }
 
 package service {
 
 class CommentService
-class CommentRoomService
+class ChatRoomService
 class UserService
+class FriendsListService
 package model {
 class User {
 String userID
@@ -37,7 +39,10 @@ package model{
 class CommentRecord
 class UserRecord
 class FriendsListRecord
-class ChatRoomRecord
+class ChatRoomRecord{
+- String userID
+- String message
+- Long timeStamp
 }
     }
         }
