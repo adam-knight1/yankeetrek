@@ -1,0 +1,18 @@
+Resources:
+  CommentTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Comment
+      AttributeDefinitions:
+        - AttributeName: commentId
+          AttributeType: S
+        - AttributeName: ownerId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: commentId
+          KeyType: HASH
+        - AttributeName: ownerId
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
