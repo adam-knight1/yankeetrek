@@ -23,7 +23,6 @@ public class FriendsListRecord {
 @DynamoDBAttribute(attributeName = "blockedUsers")
     private List<String> blockedUsers;
 
-
     public String getUserId() {
         return userId;
     }
