@@ -6,18 +6,18 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.kenzie.appserver.service.model.Comment;
-import software.amazon.eventstream.HeaderValue;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @DynamoDBTable(tableName = "ChatRoom")
-public class ChatRoomRecord implements Map<String, HeaderValue> {
+public class ChatRoomRecord {
 
     @DynamoDBHashKey
-    public String userId;
+    private String personId;
 
     @DynamoDBAttribute
-    public String message;
+    private String message;
 
     @DynamoDBAttribute
     private String topicName;
@@ -35,12 +35,12 @@ public class ChatRoomRecord implements Map<String, HeaderValue> {
         return topicName;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public String getMessage() {
@@ -80,75 +80,15 @@ public class ChatRoomRecord implements Map<String, HeaderValue> {
     }
 
     @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean containsKey(Object key) {
-        return false;
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        return false;
-    }
-
-    @Override
-    public HeaderValue get(Object key) {
-        return null;
-    }
-
-    @Override
-    public HeaderValue put(String key, HeaderValue value) {
-        return null;
-    }
-
-    @Override
-    public HeaderValue remove(Object key) {
-        return null;
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends HeaderValue> m) {
-
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public Set<String> keySet() {
-        return null;
-    }
-
-    @Override
-    public Collection<HeaderValue> values() {
-        return null;
-    }
-
-    @Override
-    public Set<Entry<String, HeaderValue>> entrySet() {
-        return null;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChatRoomRecord that = (ChatRoomRecord) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(message, that.message) && Objects.equals(topicName, that.topicName) && Objects.equals(commentList, that.commentList) && Objects.equals(chatRoomId, that.chatRoomId) && Objects.equals(timeStamp, that.timeStamp);
+        return Objects.equals(personId, that.personId) && Objects.equals(message, that.message) && Objects.equals(topicName, that.topicName) && Objects.equals(commentList, that.commentList) && Objects.equals(chatRoomId, that.chatRoomId) && Objects.equals(timeStamp, that.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, message, topicName, commentList, chatRoomId, timeStamp);
+        return Objects.hash(personId, message, topicName, commentList, chatRoomId, timeStamp);
     }
 }
