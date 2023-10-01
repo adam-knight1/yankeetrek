@@ -12,20 +12,21 @@ import java.util.UUID;
 @DynamoDBTable(tableName = "User")
  public class UserRecord {
 
-    @DynamoDBHashKey
+    @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
-
+   
     @DynamoDBRangeKey(attributeName = "email")
     private String email;
 
-    @DynamoDBAttribute
+    @DynamoDBAttribute(attributeName = ("username")
+
     private String username;
 
-    @DynamoDBAttribute
+    @DynamoDBAttribute(attributeName = "password")
     private String password;
 
-    @DynamoDBAttribute
-    private ArrayList hobbies;
+    @DynamoDBAttribute(attributeName = "hobbies")
+    private ArrayList<String> hobbies;
 
     public UUID getUserId() {
         return userId;
@@ -57,6 +58,14 @@ import java.util.UUID;
 
     public void setHobbies(ArrayList hobbies) {
         this.hobbies = hobbies;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
