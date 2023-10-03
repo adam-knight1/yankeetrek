@@ -3,8 +3,12 @@ package com.kenzie.appserver.controller.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.security.Timestamp;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentResponse {
+
+    //what we send back to the client
 
     @JsonProperty("commentId")
     private String commentId;
@@ -20,6 +24,9 @@ public class CommentResponse {
 
     @JsonProperty("chatRoomId")
     private String chatRoomId;
+    @JsonProperty("timestamp")
+    private Timestamp timestamp;
+
 
     public String getCommentId() {
         return commentId;

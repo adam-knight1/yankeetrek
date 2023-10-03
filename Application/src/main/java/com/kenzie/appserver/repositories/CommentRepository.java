@@ -8,5 +8,9 @@ import java.util.List;
 
 @EnableScan
 public interface CommentRepository extends CrudRepository<CommentRecord, String> {
+    List<CommentRecord> findByOwnerId(String ownerId);  //query method that spring autogenerates (hopefully)...
+
+    List<CommentRecord> findByOwnerIdAndChatRoomId(String ownerId, String chatRoomId);
+
 }
 

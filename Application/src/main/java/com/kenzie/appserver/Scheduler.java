@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scheduler {
 
+    //adam-background if we want to do potentially any caching tasks or a
+    // feature like notifications?
+
     // Create any asynchronous services
 
 //    @Autowired
