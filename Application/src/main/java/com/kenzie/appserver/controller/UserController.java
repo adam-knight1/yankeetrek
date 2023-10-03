@@ -46,6 +46,8 @@ public class UserController {
         return  ResponseEntity.ok(userToResponse(user));
     }
 
+    // updateUser, deleteUser,
+
     private UserResponse userToResponse(User user) {
         UserResponse userResponse = new UserResponse();
         userResponse.setUserId(user.getUserId().toString());
