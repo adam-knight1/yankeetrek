@@ -6,6 +6,8 @@ import javax.validation.constraints.NotEmpty;
 
 public class CommentCreateRequest {
 
+    //the data we receive from the client when they make requests
+
     @NotEmpty
     @JsonProperty("ownerId")
     private String ownerId;

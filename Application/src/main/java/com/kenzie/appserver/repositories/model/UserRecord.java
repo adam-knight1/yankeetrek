@@ -14,7 +14,7 @@ public class UserRecord {
 
     @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
-
+   
     @DynamoDBRangeKey(attributeName = "email")
     private String email;
 
