@@ -1,31 +1,32 @@
 package com.kenzie.appserver.service.model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class User {
     //created by adam
-    UUID userID;
+    UUID userId;
     String username;
     String password;
     String email;
 
     public User() {
-        this.userID = UUID.randomUUID();
+        this.userId = UUID.randomUUID();
     }
 
     public User(String username, String password, String email) {
-        this.userID = UUID.randomUUID();
+        this.userId = UUID.randomUUID();
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public UUID getUserID() {
-        return userID;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUserID(UUID userID) {
-        this.userID = userID;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -55,7 +56,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID=" + userID +
+                "userID=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
