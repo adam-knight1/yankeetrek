@@ -58,9 +58,18 @@ public class CommentController {
         } catch (IllegalArgumentException e) {
            // return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
         return ResponseEntity.ok(commentToResponse(comment));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("id") String id) {
+        if (commentService.deleteComment(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> editComment(@PathVariable("id") String id, @RequestBody CommentCreateRequest request) {

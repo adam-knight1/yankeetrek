@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 @Service
     public class CommentService {
 
-
     private CommentRepository commentRepository;
 
     //maybe incorporate cache here?
@@ -79,8 +78,6 @@ import java.util.logging.Logger;
         return Optional.empty();
     }
 
-
-
     private Comment transformToComment(CommentRecord commentRecord) {
         Comment comment = new Comment();
         comment.setCommentId(commentRecord.getCommentId());
@@ -89,6 +86,12 @@ import java.util.logging.Logger;
         comment.setTitle(commentRecord.getTitle());
         comment.setContent(commentRecord.getContent());
         return comment;
+    }
+
+    public boolean deleteComment(String id) {
+        //working on deleteComment
+
+
     }
 }
 
