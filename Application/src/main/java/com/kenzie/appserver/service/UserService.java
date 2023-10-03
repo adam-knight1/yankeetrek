@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.UserRepository;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,20 @@ public class UserService {
         return userFromBackend;
     }
 
+    public User createNewUser(User user) {
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setPassword(user.getPassword());
+        userRecord.setUsername(user.getUsername());
+
+        try {
+            userRepository.save(userRecord);
+            return user;
+        } catch (Exception e) { //custom exception
+            System.out.println("unable to save user" + e.getMessage());
+            return null;
+        }
+    }
 
 }
