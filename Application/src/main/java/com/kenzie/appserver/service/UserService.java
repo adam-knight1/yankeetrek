@@ -1,10 +1,8 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.UserRepository;
-<<<<<<< HEAD
-=======
 import com.kenzie.appserver.repositories.model.UserRecord;
->>>>>>> main
+
 import com.kenzie.appserver.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +24,6 @@ public class UserService {
         return userFromBackend;
     }
 
-<<<<<<< HEAD
-=======
     public User createNewUser(User user) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
@@ -43,6 +39,5 @@ public class UserService {
             return null;
         }
     }
->>>>>>> main
 
 }
