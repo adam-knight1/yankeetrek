@@ -18,7 +18,8 @@ import java.util.UUID;
     @DynamoDBRangeKey(attributeName = "email")
     private String email;
 
-    @DynamoDBAttribute(attributeName = ("username")
+    @DynamoDBAttribute(attributeName = "username")
+
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")
