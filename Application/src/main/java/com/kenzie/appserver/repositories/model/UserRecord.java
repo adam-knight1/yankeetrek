@@ -14,11 +14,12 @@ public class UserRecord {
 
     @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
-
+   
     @DynamoDBRangeKey(attributeName = "email")
     private String email;
 
     @DynamoDBAttribute(attributeName = "username")
+
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")

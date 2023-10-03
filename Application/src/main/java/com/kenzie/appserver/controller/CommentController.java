@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
@@ -16,6 +17,9 @@ import static java.util.UUID.randomUUID;
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
+
+    //call the methods to add, update, delete etc comments from the service class.
+    //like the front door of the application to the client.
 
     private final CommentService commentService;
 
@@ -54,9 +58,28 @@ public class CommentController {
         } catch (IllegalArgumentException e) {
            // return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
         return ResponseEntity.ok(commentToResponse(comment));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("id") String id) {
+        if (commentService.deleteComment(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentResponse> editComment(@PathVariable("id") String id, @RequestBody CommentCreateRequest request) {
+        Optional<Comment> optionalEditedComment = commentService.editComment(id, request);
+        return optionalEditedComment.map(comment -> ResponseEntity.ok(commentToResponse(comment))).orElseGet(() -> ResponseEntity.notFound().build());
+        //intelliJ simplified this format above, check here to debug!
+        //google more on optional and streamAPI format maybe?
+    }
+
+
 
     private CommentResponse commentToResponse(Comment comment) {  //convert comment object to comment response object -adam
         CommentResponse commentResponse = new CommentResponse();
