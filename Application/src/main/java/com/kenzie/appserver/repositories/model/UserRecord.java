@@ -19,6 +19,7 @@ public class UserRecord {
     private String email;
 
     @DynamoDBAttribute(attributeName = "username")
+
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")
