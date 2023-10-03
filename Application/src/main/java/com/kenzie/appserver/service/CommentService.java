@@ -14,11 +14,11 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-    public class CommentService {
+public class CommentService {
 
     private CommentRepository commentRepository;
 
-    //maybe incorporate cache here?
+    //maybe incorporate cache here?  findById or findAll?
 
     @Autowired
     public CommentService(CommentRepository commentRepository) {
@@ -73,7 +73,6 @@ import java.util.logging.Logger;
             commentRepository.save(existingComment);
 
             return Optional.of(transformToComment(existingComment));
-
         }
         return Optional.empty();
     }
@@ -89,10 +88,15 @@ import java.util.logging.Logger;
     }
 
     public boolean deleteComment(String id) {
-        //working on deleteComment
-
-
+        try {
+            commentRepository.deleteById(id);
+            return true;
+        } catch (Exception e) { //area for custom exception perhaps?
+            System.out.println("Unable to delete comment: " + e.getMessage());
+            return false;
+        }
     }
 }
+
 
 
