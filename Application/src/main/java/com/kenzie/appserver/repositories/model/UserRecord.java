@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @DynamoDBTable(tableName = "User")
- public class UserRecord {
+public class UserRecord {
 
     @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
@@ -19,7 +19,6 @@ import java.util.UUID;
     private String email;
 
     @DynamoDBAttribute(attributeName = "username")
-
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")
@@ -28,13 +27,9 @@ import java.util.UUID;
     @DynamoDBAttribute(attributeName = "hobbies")
     private ArrayList<String> hobbies;
 
-    public UUID getUserId() {
-        return userId;
-    }
+    public UUID getUserId() { return userId; }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+    public void setUserId(UUID userId) { this.userId = userId; }
 
     public String getUsername() {
         return username;
