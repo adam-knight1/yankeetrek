@@ -14,16 +14,13 @@ import java.util.Objects;
 public class ChatRoomRecord {
 
     @DynamoDBHashKey
-    private String personId;
-
-    @DynamoDBAttribute
-    private String message;
+    private String ownerId;
 
     @DynamoDBAttribute
     private String topicName;
 
     @DynamoDBAttribute
-    private List<Comment> commentList;
+    private String comment;
 
     @DynamoDBAttribute
     private String chatRoomId;
@@ -31,36 +28,28 @@ public class ChatRoomRecord {
     @DynamoDBRangeKey
     private Long timeStamp;
 
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getTopicName() {
         return topicName;
-    }
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getChatRoomId() {
@@ -84,11 +73,11 @@ public class ChatRoomRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChatRoomRecord that = (ChatRoomRecord) o;
-        return Objects.equals(personId, that.personId) && Objects.equals(message, that.message) && Objects.equals(topicName, that.topicName) && Objects.equals(commentList, that.commentList) && Objects.equals(chatRoomId, that.chatRoomId) && Objects.equals(timeStamp, that.timeStamp);
+        return Objects.equals(ownerId, that.ownerId) && Objects.equals(topicName, that.topicName) && Objects.equals(comment, that.comment) && Objects.equals(chatRoomId, that.chatRoomId) && Objects.equals(timeStamp, that.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(personId, message, topicName, commentList, chatRoomId, timeStamp);
+        return Objects.hash(ownerId, topicName, comment, chatRoomId, timeStamp);
     }
 }
