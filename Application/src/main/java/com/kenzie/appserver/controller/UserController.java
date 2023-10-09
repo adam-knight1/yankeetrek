@@ -29,7 +29,7 @@ public class UserController {
     public ResponseEntity<UserResponse> getUser(@PathVariable("userId") String userId) {
         User user = userService.findByUserId(userId);
         if (user == null) {
-            return ResponseEntity.ok(userToResponse(user));
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userToResponse(user));
     }
