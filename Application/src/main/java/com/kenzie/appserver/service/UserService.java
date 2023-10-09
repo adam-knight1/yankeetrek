@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 
@@ -63,7 +64,7 @@ public class UserService {
         try {
             userRepository.delete(userRecord);
             return true;
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
             System.out.println("Unable to delete user: " + e.getMessage());
             return false;
         }
