@@ -22,8 +22,6 @@ public class Comment {
     public Comment() {
     }
 
-
-
     public String getCommentId() {
         return commentId;
     }

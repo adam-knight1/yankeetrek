@@ -1,0 +1,18 @@
+Resources:
+  CommentTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ChatRoom
+      AttributeDefinitions:
+        - AttributeName: ownerId
+          AttributeType: S
+        - AttributeName: timeStamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ownerId
+          KeyType: HASH
+        - AttributeName: timeStamp
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
