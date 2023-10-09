@@ -35,7 +35,7 @@ public class UserService {
         try {
             userRepository.save(userRecord);
             return user;
-        } catch (Exception e) { //custom exception
+        } catch (IllegalArgumentException e) { //custom exception
             System.out.println("unable to save user" + e.getMessage());
             return null;
         }
