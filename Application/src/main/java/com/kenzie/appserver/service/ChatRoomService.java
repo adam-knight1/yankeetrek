@@ -21,7 +21,7 @@ import java.util.List;
         this.commentService = commentService;
     }
 
-    //Do you all think "postComment" should be listed as Comment or String? -ALEXIS
+    //Do you all think "commentMessage" should be listed as Comment or String? -ALEXIS
     //Still working on this constructor
     public ChatRoom sendComment(String commentMessage, String ownerId ){
         Comment comment = commentService.addNewComment(commentMessage);
@@ -30,7 +30,7 @@ import java.util.List;
         }
 
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
-        chatRoomRecord.setOwnerId(chatRoomRecord.getOwnerId());
+        chatRoomRecord.setOwnerId(ownerId);
         chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
         chatRoomRecord.setChatRoomId(chatRoomRecord.getChatRoomId());
         chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());

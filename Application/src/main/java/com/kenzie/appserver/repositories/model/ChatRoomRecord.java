@@ -16,7 +16,7 @@ public class ChatRoomRecord {
     @DynamoDBHashKey
     private String ownerId;
 
-    @DynamoDBAttribute
+    @DynamoDBRangeKey
     private String topicName;
 
     @DynamoDBAttribute
@@ -25,7 +25,7 @@ public class ChatRoomRecord {
     @DynamoDBAttribute
     private String chatRoomId;
 
-    @DynamoDBRangeKey
+    @DynamoDBAttribute
     private Long timeStamp;
 
     public String getOwnerId() {
