@@ -23,7 +23,7 @@ import java.util.List;
 
     //Do you all think "commentMessage" should be listed as Comment or String? -ALEXIS
     //Still working on this constructor
-    public ChatRoom sendComment(String commentMessage, String ownerId ){
+    public ChatRoom sendComment(Comment commentMessage, String ownerId ){
         Comment comment = commentService.addNewComment(commentMessage);
         if (commentService.addNewComment(commentMessage)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
