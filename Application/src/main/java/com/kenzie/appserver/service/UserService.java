@@ -70,7 +70,7 @@ public class UserService {
         }
     }
 
-    private User transformToUser(UserRecord userRecord) {
+    public User transformToUser(UserRecord userRecord) {
         User user = new User();
         user.setUserId(userRecord.getUserId());
         user.setEmail(userRecord.getEmail());
