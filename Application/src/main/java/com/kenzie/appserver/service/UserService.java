@@ -33,11 +33,19 @@ public class UserService {
         userRecord.setPassword(user.getPassword());
         userRecord.setUsername(user.getUsername());
 
-        try {
-            userRepository.save(userRecord);
-            return user;
-        } catch (IllegalArgumentException e) { //custom exception
-            System.out.println("unable to save user" + e.getMessage());
+        if (userRecord.getUserId() != null ||
+                userRecord.getEmail() != null ||
+                userRecord.getPassword() != null ||
+                userRecord.getUsername() != null) {
+
+            try {
+                userRepository.save(userRecord);
+                return user;
+                } catch (IllegalArgumentException e) { //custom exception
+                System.out.println("unable to save user" + e.getMessage());
+                return null;
+            }
+        } else {
             return null;
         }
     }

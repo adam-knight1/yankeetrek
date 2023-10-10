@@ -6,6 +6,7 @@ import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonParser;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
@@ -18,8 +19,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
-import static org.springframework.test.util.AssertionErrors.assertNull;
-import static org.springframework.test.util.AssertionErrors.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.util.AssertionErrors.*;
 
 public class UserServiceTest {
     @Autowired
@@ -73,7 +74,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createNewUser_createsNewUser() {
+    public void createNewUser_successful() {
         // Given
         String username = "bstaats";
         String password = "abc123";
@@ -90,10 +91,7 @@ public class UserServiceTest {
     @Test
     public void createNewUser_fails() {
         // Given
-        String username = null;
-        String password = null;
-        String email = null;
-        User user = new User(username, password, email);
+        User user = new User(null, null, null);
 
         // When
         try {
@@ -101,6 +99,44 @@ public class UserServiceTest {
         } catch (IllegalArgumentException e) {
             System.out.println("creating new user failed" + e.getMessage());
         }
-
     }
+
+    @Test
+    public void updateUser_successful() {
+        // Given
+        String username = "bstaats";
+        String password = "abc123";
+        String email = "brandi.staats@mykenzie.snhu.edu";
+        User user = new User(username, password, email);
+
+        userRecord.setUserId(user.getUserId());
+        userRecord.setUsername(username);
+        userRecord.setPassword(password);
+        userRecord.setEmail(email);
+
+        userRepository.save(userRecord);
+
+        // When
+        Optional<User> result = userService.updateUser(user);
+
+        // Then
+        assertTrue("should match user and result", user.toString().equals(result.toString()));
+    }
+
+    @Test
+    public void updateUser_fails() {
+        // Given
+        String username = "bstaats";
+        String password = "abc123";
+        String email = "brandi.staats@mykenzie.snhu.edu";
+        User user = new User(username, password, email);
+
+        // When
+        Optional<User> result = userService.updateUser(user);
+
+        // Then
+        assertThrows(NullPointerException.class, Executable.class.cast(result));
+    }
+
+
 }
