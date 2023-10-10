@@ -27,9 +27,9 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CommentResponse> getComment(@PathVariable("id") String id) {
-        Comment comment = commentService.findById(id);
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentResponse> getComment(@PathVariable("commentId") String commentId) {
+        Comment comment = commentService.findById(commentId);
         if (comment == null) {
             return ResponseEntity.notFound().build();
         }
@@ -61,8 +61,8 @@ public class CommentController {
         return ResponseEntity.ok(commentToResponse(comment));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable("id") String id) {
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("commentId") String id) {
         if (commentService.deleteComment(id)) {
             return ResponseEntity.noContent().build();
         } else {
@@ -71,15 +71,13 @@ public class CommentController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CommentResponse> editComment(@PathVariable("id") String id, @RequestBody CommentCreateRequest request) {
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentResponse> editComment(@PathVariable("commentId") String id, @RequestBody CommentCreateRequest request) {
         Optional<Comment> optionalEditedComment = commentService.editComment(id, request);
         return optionalEditedComment.map(comment -> ResponseEntity.ok(commentToResponse(comment))).orElseGet(() -> ResponseEntity.notFound().build());
         //intelliJ simplified this format above, check here to debug!
         //google more on optional and streamAPI format maybe?
     }
-
-
 
     private CommentResponse commentToResponse(Comment comment) {  //convert comment object to comment response object -adam
         CommentResponse commentResponse = new CommentResponse();

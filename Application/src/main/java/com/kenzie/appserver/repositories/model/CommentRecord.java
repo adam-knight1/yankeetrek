@@ -4,67 +4,69 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
 
 @DynamoDBTable(tableName = "Comment")
-    public class CommentRecord {
+public class CommentRecord {
 
-        @DynamoDBHashKey
-        private String commentId;
+    @DynamoDBHashKey(attributeName = "commentId")
+    private String commentId;
 
-        @DynamoDBAttribute
-        private String chatRoomId;
+    @DynamoDBRangeKey(attributeName = "ownerId")
+    private String ownerId;
 
-        @DynamoDBAttribute
-        private String content;
 
-        @DynamoDBRangeKey
-        private String ownerId;
+    @DynamoDBAttribute
+    private String chatRoomId;
 
-        @DynamoDBAttribute
-        private String title;
+    @DynamoDBAttribute
+    private String content;
 
-        public String getCommentId() {
-            return commentId;
-        }
+    @DynamoDBAttribute
+    private String title;
 
-        public void setCommentId(String commentId) {
-            this.commentId = commentId;
-        }
+    public String getCommentId() {
+        return commentId;
+    }
 
-        public String getChatRoomId() {
-            return chatRoomId;
-        }
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
-        public void setChatRoomId(String chatRoomId) {
-            this.chatRoomId = chatRoomId;
-        }
+    public String getChatRoomId() {
+        return chatRoomId;
+    }
 
-        public String getContent() {
-            return content;
-        }
+    public void setChatRoomId(String chatRoomId) {
+        this.chatRoomId = chatRoomId;
+    }
 
-        public void setContent(String content) {
-            this.content = content;
-        }
+    public String getContent() {
+        return content;
+    }
 
-        public String getOwnerId() {
-            return ownerId;
-        }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-        public void setOwnerId(String ownerId) {
-            this.ownerId = ownerId;
-        }
+    public String getOwnerId() {
+        return ownerId;
+    }
 
-        public String getTitle() {
-            return title;
-        }
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @Override
     public boolean equals(Object o) {  // we can change what this compares if need be -adam
