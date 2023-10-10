@@ -34,6 +34,7 @@ import java.util.List;
         chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
         chatRoomRecord.setChatRoomId(chatRoomRecord.getChatRoomId());
         chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());
+        chatRoomRepository.save(chatRoomRecord);
 
         return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp());
     }
