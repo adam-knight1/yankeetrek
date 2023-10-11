@@ -37,7 +37,6 @@ public class UserService {
                 userRecord.getEmail() != null ||
                 userRecord.getPassword() != null ||
                 userRecord.getUsername() != null) {
-
             try {
                 userRepository.save(userRecord);
                 return user;

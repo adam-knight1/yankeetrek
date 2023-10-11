@@ -1,6 +1,5 @@
-package com.kenzie.appserver.service;
+package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.UserController;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
@@ -8,19 +7,13 @@ import com.kenzie.appserver.service.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonParser;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.annotation.JsonAppend;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.test.util.AssertionErrors.*;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class UserServiceTest {
     @Autowired
@@ -29,36 +22,22 @@ public class UserServiceTest {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    UserRecord userRecord;
-
-    @Autowired
-    private final ObjectMapper mapper = new ObjectMapper();
-
-
-
     @Test
-    public void findByUserId_successful() throws IOException {
+    public void findByUserId_successful() {
         // Given
-        String username = "bstaats";
-        String password = "abc123";
-        String email = "brandi.staats@mykenzie.snhu.edu";
-        User user = new User(username, password, email);
+        UUID id = randomUUID();
 
-        userRecord = new UserRecord();
-        userRecord.setUserId(user.getUserId());
-        userRecord.setUsername(user.getUsername());
-        userRecord.setEmail(user.getEmail());
-        userRecord.setPassword(user.getPassword());
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(id);
 
         userRepository.save(userRecord);
-        userService.createNewUser(user);
 
         // When
-        User userResult = userService.findByUserId(user.getUserId().toString());
+        User userResult = userService.findByUserId(id.toString());
+
 
         // Then
-        assert userResult == user;
+        assert userResult.getUserId() == id;
     }
 
     @Test
@@ -95,7 +74,7 @@ public class UserServiceTest {
 
         // When
         try {
-            User result = userService.createNewUser(user);
+            userService.createNewUser(user);
         } catch (IllegalArgumentException e) {
             System.out.println("creating new user failed" + e.getMessage());
         }
@@ -104,11 +83,12 @@ public class UserServiceTest {
     @Test
     public void updateUser_successful() {
         // Given
-        String username = "bstaats";
-        String password = "abc123";
-        String email = "brandi.staats@mykenzie.snhu.edu";
+        String username = "brandis";
+        String password = "cat";
+        String email = "brandi@gmail.com";
         User user = new User(username, password, email);
 
+        UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
         userRecord.setUsername(username);
         userRecord.setPassword(password);
@@ -126,9 +106,9 @@ public class UserServiceTest {
     @Test
     public void updateUser_fails() {
         // Given
-        String username = "bstaats";
-        String password = "abc123";
-        String email = "brandi.staats@mykenzie.snhu.edu";
+        String username = "maya";
+        String password = "dog";
+        String email = "maya@gmail.com";
         User user = new User(username, password, email);
 
         // When
@@ -138,5 +118,38 @@ public class UserServiceTest {
         assertThrows(NullPointerException.class, Executable.class.cast(result));
     }
 
+    @Test
+    public void deleteUser_successful() {
+        // Given
+        String username = "jacob";
+        String password = "lizard";
+        String email = "jacob@gmail.com";
+        User user = new User(username, password, email);
 
+        userService.createNewUser(user);
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setUsername(user.getUsername());
+        userRecord.setPassword(user.getPassword());
+        userRecord.setEmail(user.getEmail());
+
+        // When
+        boolean result = userService.deleteUser(userRecord);
+
+        // Then
+        assertTrue("User deleted successfully", result);
+    }
+
+    @Test
+    public void deleteUser_fails() {
+        // Given
+        UserRecord userRecord = new UserRecord();
+
+        // When
+        boolean result = userService.deleteUser(userRecord);
+
+        // Then
+        assertThrows(NullPointerException.class, Executable.class.cast(result));
+    }
 }
