@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 
@@ -32,11 +33,19 @@ public class UserService {
         userRecord.setPassword(user.getPassword());
         userRecord.setUsername(user.getUsername());
 
-        try {
-            userRepository.save(userRecord);
-            return user;
-        } catch (Exception e) { //custom exception
-            System.out.println("unable to save user" + e.getMessage());
+        if (userRecord.getUserId() != null ||
+                userRecord.getEmail() != null ||
+                userRecord.getPassword() != null ||
+                userRecord.getUsername() != null) {
+
+            try {
+                userRepository.save(userRecord);
+                return user;
+                } catch (IllegalArgumentException e) { //custom exception
+                System.out.println("unable to save user" + e.getMessage());
+                return null;
+            }
+        } else {
             return null;
         }
     }
@@ -63,13 +72,13 @@ public class UserService {
         try {
             userRepository.delete(userRecord);
             return true;
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
             System.out.println("Unable to delete user: " + e.getMessage());
             return false;
         }
     }
 
-    private User transformToUser(UserRecord userRecord) {
+    public User transformToUser(UserRecord userRecord) {
         User user = new User();
         user.setUserId(userRecord.getUserId());
         user.setEmail(userRecord.getEmail());
