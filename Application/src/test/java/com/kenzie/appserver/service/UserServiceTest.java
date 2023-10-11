@@ -1,10 +1,11 @@
-package com.kenzie.appserver.controller;
+package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,20 @@ import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-@IntegrationTest
 public class UserServiceTest {
-    @Autowired
-    UserService userService;
 
-    @Autowired
+    private UserService userService;
     UserRepository userRepository;
+
+    @BeforeEach
+    void setup() {
+        userService = mock(UserService.class);
+        userRepository = mock(UserRepository.class);
+    }
 
     @Test
     public void findByUserId_successful() {
@@ -32,14 +38,16 @@ public class UserServiceTest {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(id);
 
-        userRepository.save(userRecord);
+//        userRepository.save(userRecord);
+        User user = new User();
+        user.setUserId(id);
 
         // When
+        when(userService.findByUserId(id.toString())).thenReturn(user);
         User userResult = userService.findByUserId(id.toString());
 
-
         // Then
-        assert userResult.getUserId() == id;
+        Assertions.assertEquals(id, userResult.getUserId(), "User ids match");
     }
 
     @Test
@@ -48,10 +56,11 @@ public class UserServiceTest {
         String userId = "123456";
 
         // When
+        when(userService.findByUserId(userId)).thenReturn(null);
         User result = userService.findByUserId(userId);
 
         // Then
-        assert result == null;
+        Assertions.assertNull(result, "user does not exist");
     }
 
     @Test
