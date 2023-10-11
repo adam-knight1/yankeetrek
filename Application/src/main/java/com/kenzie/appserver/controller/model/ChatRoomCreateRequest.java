@@ -4,39 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class CommentCreateRequest {
-
-    //the data we receive from the client when they make requests
-
+public class ChatRoomCreateRequest {
     @NotEmpty
     @JsonProperty("ownerId")
     private String ownerId;
 
-    @JsonProperty("title")
-    private String title;
-
-    @JsonProperty("content")
-    private String content;
-
     @JsonProperty("chatRoomId")
     private String chatRoomId;
 
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @JsonProperty("timestamp")
+    private String timeStamp;
 
     public String getOwnerId() {
         return ownerId;
@@ -53,6 +30,12 @@ public class CommentCreateRequest {
     public void setChatRoomId(String chatRoomId) {
         this.chatRoomId = chatRoomId;
     }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 }
-
-

@@ -3,52 +3,47 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.repositories.ChatRoomRepository;
 import com.kenzie.appserver.repositories.model.ChatRoomRecord;
 import com.kenzie.appserver.service.model.ChatRoom;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.kenzie.appserver.service.model.Comment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import software.amazon.eventstream.Message;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
     public class ChatRoomService {
     private ChatRoomRepository chatRoomRepository;
-   // private final List<ChatRoomRecord> userIdlist;
+    private CommentService commentService;
 
-    //dont think this is right...?? -alexis
-    //do i need to make a message class tooo??? -alexis
-    //seems like the easiest way to do this but is off.. -alexis
-   // private final List<Message> chatLog;
-
-    @Autowired
-    public ChatRoomService(ChatRoomRepository chatRoomRepository){
+    public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService ){
         this.chatRoomRepository = chatRoomRepository;
-      //  this.userIdlist = userIdlist;
-      //  this.chatLog = new ArrayList<Message>();
+        this.commentService = commentService;
     }
 
-    public ChatRoom findById (String id){
-        return chatRoomRepository
-                .findById(id)
-                .map(chatRoom -> new ChatRoom(chatRoom.getPersonId(), chatRoom.getMessage(), chatRoom.getTopicName(),
-                        chatRoom.getChatRoomId(), chatRoom.getTimeStamp(), chatRoom.getCommentList()))
-                .orElse(null);
+    //Do you all think "commentMessage" should be listed as Comment or String? -ALEXIS
+    //Still working on this constructor
+    public ChatRoom sendComment(Comment sentComment, String ownerId ){
+        Comment comment = commentService.addNewComment(sentMessage);
+        if (commentService.addNewComment(sentMessage)){//.getMessageSent should be here from the comment class. i need something to close out of the message was sent or not
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
+        }
+
+        ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
+        chatRoomRecord.setOwnerId(ownerId);
+        chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
+        chatRoomRecord.setChatRoomId(chatRoomRecord.getChatRoomId());
+        chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());
+        chatRoomRepository.save(chatRoomRecord);
+
+        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp());
     }
-    //  public void addUserId (ChatRoomRecord userId){
-    //    userIdlist.add(userId);
-    // }
-    // public void removeUserId (ChatRoomRecord userId){
-    //   userIdlist.remove(userId);
-    // }
 
-    //public void sendMessage (ChatRoomRecord sender, String messageContent){
-    //    Message message = new Message(sender, messageContent.getBytes());
-    //    chatLog.add(message);
-    // }
-
-    // public List<Message> getChatLog(){
-    //    return chatLog;
-    //}
+    public List<ChatRoom> findAll(){
+        List<ChatRoom> chatRooms = new ArrayList<>();
+        chatRoomRepository.findAll()
+                .forEach(chatRoomRecord -> chatRooms.add(new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp())));
+        return chatRooms;
+    }
 
 }

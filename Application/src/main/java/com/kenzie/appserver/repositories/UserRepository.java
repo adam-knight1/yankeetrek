@@ -7,5 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 
 @EnableScan
 public interface UserRepository extends CrudRepository<UserRecord, String> {
-    //added by adam
+
+    //possible idea for basic authentication, would require hashing and a secondary index irl
+    //List<UserRecord> findByUsernameAndPassword(String username, String password);
+    //-adam
+
 }
