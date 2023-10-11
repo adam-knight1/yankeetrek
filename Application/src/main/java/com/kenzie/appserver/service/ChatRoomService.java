@@ -23,9 +23,7 @@ import java.util.List;
 
     //Do you all think "sentComment" should be listed as Comment or String? -ALEXIS
     //Still working on this constructor
-<<<<<<< HEAD
 
-=======
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
         if (commentService.addNewComment(sentComment)){//.getMessageSent should be here from the comment class. i need something to close out of the message was sent or not
@@ -42,7 +40,7 @@ import java.util.List;
 
         return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp());
     }
->>>>>>> 6ce831d (switch)
+
 
     public List<ChatRoom> findAll(){
         List<ChatRoom> chatRooms = new ArrayList<>();
