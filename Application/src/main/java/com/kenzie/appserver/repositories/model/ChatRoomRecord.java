@@ -17,7 +17,7 @@ public class ChatRoomRecord {
     @DynamoDBHashKey
     private String ownerId;
 
-    @DynamoDBRangeKey
+    @DynamoDBAttribute
     private String topicName;
 
     @DynamoDBAttribute
