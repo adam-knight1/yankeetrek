@@ -12,12 +12,12 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Comment")
 public class CommentRecord {
 
+    @Id
     @DynamoDBHashKey(attributeName = "commentId")
     private String commentId;
 
-    @DynamoDBRangeKey(attributeName = "ownerId")
+    @DynamoDBAttribute(attributeName = "ownerId")
     private String ownerId;
-
 
     @DynamoDBAttribute
     private String chatRoomId;

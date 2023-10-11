@@ -5,16 +5,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.kenzie.appserver.service.model.User;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "FriendsList")
 public class FriendsListRecord {
-
+@Id
 @DynamoDBHashKey(attributeName = "userId")
     private String userId;
-@DynamoDBRangeKey(attributeName = "friendsListId")
+@DynamoDBAttribute(attributeName = "friendsListId")
     private String friendsListId;
 @DynamoDBAttribute(attributeName = "friendsIds")
     private List<String> friendsIds;

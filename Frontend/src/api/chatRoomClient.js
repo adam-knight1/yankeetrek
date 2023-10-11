@@ -13,17 +13,12 @@ export default class ChatRoomClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        //
-        const methodsToBind = ['clientLoaded', 'getExample', 'createExample'];
+        const methodsToBind = ['clientLoaded', 'getChatRoom', 'createChatRoom', 'sendMessage'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
     }
 
-    /**
-     * Run any functions that are supposed to be called once the client has loaded successfully.
-     * @param client The client that has been successfully loaded.
-     */
     clientLoaded(client) {
         this.client = client;
         if (this.props.hasOwnProperty("onReady")){
@@ -31,44 +26,41 @@ export default class ChatRoomClient extends BaseClass {
         }
     }
 
-    /**
-     * Gets the concert for the given ID.
-     * @param id Unique identifier for a concert
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The concert
-     */
-    async getExample(id, errorCallback) {
+    async getChatRoom(id, errorCallback) {
         try {
-            const response = await this.client.get(`/example/${id}`);
+            const response = await this.client.get(`/chatroom/${id}`);
             return response.data;
         } catch (error) {
-            this.handleError("getExample", error, errorCallback)
+            this.handleError("getChatRoom", error, errorCallback)
         }
     }
 
-    async createExample(name, errorCallback) {
+    async createChatRoom(name, errorCallback) {
         try {
-            const response = await this.client.post(`example`, {
-                "name" : name
-            });
+            const response = await this.client.post(`chatroom`, { "name" : name });
             return response.data;
         } catch (error) {
-            this.handleError("createExample", error, errorCallback);
+            this.handleError("createChatRoom", error, errorCallback);
         }
     }
 
-    /**
-     * Helper method to log the error and run any error functions.
-     * @param error The error received from the server.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     */
+    async sendMessage(message, chatRoomId, errorCallback) {
+        try {
+            const response = await this.client.post(`chatroom/${chatRoomId}/message`, { "content" : message });
+            return response.data;
+        } catch (error) {
+            this.handleError("sendMessage", error, errorCallback);
+        }
+    }
+
     handleError(method, error, errorCallback) {
-        console.error(method + " failed - " + error);
-        if (error.response.data.message !== undefined) {
+        console.error(`${method} failed - ${error}`);
+        if (error.response && error.response.data.message !== undefined) {
             console.error(error.response.data.message);
         }
         if (errorCallback) {
-            errorCallback(method + " failed - " + error);
+            errorCallback(`${method} failed - ${error}`);
         }
     }
 }
+

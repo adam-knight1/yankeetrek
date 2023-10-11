@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,15 +12,14 @@ import java.util.UUID;
 
 @DynamoDBTable(tableName = "User")
 public class UserRecord {
-
+    @Id
     @DynamoDBHashKey(attributeName = "userId")
     private UUID userId;
    
-    @DynamoDBRangeKey(attributeName = "email")
+    @DynamoDBAttribute(attributeName = "email")
     private String email;
 
     @DynamoDBAttribute(attributeName = "username")
-
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")
@@ -48,11 +48,11 @@ public class UserRecord {
         this.password = password;
     }
 
-    public ArrayList getHobbies() {
+    public ArrayList<String> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(ArrayList hobbies) {
+    public void setHobbies(ArrayList<String> hobbies) {
         this.hobbies = hobbies;
     }
 
