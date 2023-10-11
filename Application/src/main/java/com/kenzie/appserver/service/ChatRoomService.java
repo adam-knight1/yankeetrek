@@ -23,21 +23,7 @@ import java.util.List;
 
     //Do you all think "commentMessage" should be listed as Comment or String? -ALEXIS
     //Still working on this constructor
-    public ChatRoom sendComment(Comment sentComment, String ownerId ){
-        Comment comment = commentService.addNewComment(sentMessage);
-        if (commentService.addNewComment(sentMessage)){//.getMessageSent should be here from the comment class. i need something to close out of the message was sent or not
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
-        }
 
-        ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
-        chatRoomRecord.setOwnerId(ownerId);
-        chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
-        chatRoomRecord.setChatRoomId(chatRoomRecord.getChatRoomId());
-        chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());
-        chatRoomRepository.save(chatRoomRecord);
-
-        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp());
-    }
 
     public List<ChatRoom> findAll(){
         List<ChatRoom> chatRooms = new ArrayList<>();
