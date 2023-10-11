@@ -109,17 +109,17 @@
     text-decoration: none;
 }
 
-/*added the above styles so the buttons look cooler */
+/*added the above styles so the buttons look cooler -adam */
 .user-button:hover {
     background-color: #0056b3;
 }
 
-.center-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* might need to adjust this height-adam */
-  flex-direction: column;
+.welcome-section {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f2f2f2;
 }
+
 
 
