@@ -1,5 +1,6 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
@@ -15,6 +16,7 @@ import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
+@IntegrationTest
 public class UserServiceTest {
     @Autowired
     UserService userService;
