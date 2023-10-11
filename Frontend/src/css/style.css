@@ -87,3 +87,39 @@
 .state.active {
     display: block;
 }
+
+.chatroom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.chatroom-button:hover {
+    background-color: #0056b3;
+}
+
+.user-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/*added the above styles so the buttons look cooler -adam */
+.user-button:hover {
+    background-color: #0056b3;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f2f2f2;
+}
+
+
+

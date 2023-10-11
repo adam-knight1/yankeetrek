@@ -25,14 +25,15 @@ module.exports = {
     //for example if you sent the request /example/bob to the backend, it will be converted into
     //http://localhost:5001/example/bob and sent to the backend that way.
     //uncomment the following proxy section to make the example work
-//    proxy: [
-//          {
-//            context: [
-//              '/example',
-//            ],
-//            target: 'http://localhost:5001'
-//          }
-//        ]
+    //uncommented -adam
+    proxy: [
+         {
+            context: [
+              '/example',
+            ],
+            target: 'http://localhost:5001'
+          }
+        ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -40,6 +41,17 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+          template: './src/chatRoom.html',
+          filename: 'chatRoom.html',
+          inject: false
+        }),
+     new HtmlWebpackPlugin({
+              template: './src/user.html',
+              filename: 'user.html',
+              inject: false
+            }),
+//I added these plugins to allow you to click into each menu -adam
     new CopyPlugin({
       patterns: [
         {
