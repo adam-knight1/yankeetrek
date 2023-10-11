@@ -6,13 +6,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.kenzie.appserver.service.model.Comment;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "ChatRoom")
 public class ChatRoomRecord {
-
+    @Id
     @DynamoDBHashKey
     private String ownerId;
 
@@ -25,7 +26,7 @@ public class ChatRoomRecord {
     @DynamoDBAttribute
     private String chatRoomId;
 
-    @DynamoDBRangeKey
+    @DynamoDBAttribute
     private Long timeStamp;
 
     public String getOwnerId() {
