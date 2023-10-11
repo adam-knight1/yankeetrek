@@ -25,7 +25,7 @@ public class ChatRoomController {
         this.commentService = commentService;
     }
     //@postmapping
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ChatRoomResponse> chatRoom(
             @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
         // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
@@ -38,7 +38,7 @@ public class ChatRoomController {
         chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
 
         return ResponseEntity.ok(chatRoomResponse);
-    }
+    }*/
     @GetMapping("/all")
     public ResponseEntity<List<ChatRoomResponse>> getAllComments() {
         List<ChatRoom> chatRooms = chatRoomService.findAll();
@@ -49,7 +49,7 @@ public class ChatRoomController {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
         chatRoomResponse.setOwnerId(chatRoom.getUserId());
-        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
+        //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp()); //long versus string mismatch
         return chatRoomResponse;
 
 
