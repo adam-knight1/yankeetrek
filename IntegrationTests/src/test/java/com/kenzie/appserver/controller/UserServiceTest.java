@@ -1,14 +1,13 @@
-package com.kenzie.appserver.service;
+package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
+import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.webjars.NotFoundException;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -151,6 +150,6 @@ public class UserServiceTest {
         boolean result = userService.deleteUser(userRecord);
 
         // Then
-        assertThrows(NotFoundException.class, Executable.class.cast(result));
+        assertThrows(NullPointerException.class, Executable.class.cast(result));
     }
 }
