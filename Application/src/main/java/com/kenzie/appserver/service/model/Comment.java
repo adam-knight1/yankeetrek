@@ -14,6 +14,7 @@ public class Comment {
     //private Boolean messageSent;
 
     public Comment(String commentId, String ownerId, String title, String content, String chatRoomId, Boolean messageSent) {
+        //parameter mismatch with other packages?
         this.commentId = commentId;
         this.ownerId = ownerId;
         this.title = title;
