@@ -20,7 +20,6 @@ public class UserRecord {
     private String email;
 
     @DynamoDBAttribute(attributeName = "username")
-
     private String username;
 
     @DynamoDBAttribute(attributeName = "password")
@@ -49,11 +48,11 @@ public class UserRecord {
         this.password = password;
     }
 
-    public ArrayList getHobbies() {
+    public ArrayList<String> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(ArrayList hobbies) {
+    public void setHobbies(ArrayList<String> hobbies) {
         this.hobbies = hobbies;
     }
 
