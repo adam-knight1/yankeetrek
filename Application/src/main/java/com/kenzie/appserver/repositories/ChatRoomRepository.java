@@ -7,5 +7,5 @@ import java.util.List;
 
 @EnableScan
 public interface ChatRoomRepository extends CrudRepository<ChatRoomRecord, String> {
-   // List<ChatRoomRecord> findByUserId(String userId);
+   //List<ChatRoomRecord> findByUserId(String userId);
 }

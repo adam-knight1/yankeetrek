@@ -21,6 +21,7 @@ public class CommentCreateRequest {
     @JsonProperty("chatRoomId")
     private String chatRoomId;
 
+
     public String getContent() {
         return content;
     }
