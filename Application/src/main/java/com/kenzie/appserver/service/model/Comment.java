@@ -11,12 +11,15 @@ public class Comment {
     private String content;
     private String chatRoomId;
 
-    public Comment(String commentId, String ownerId, String title, String content, String chatRoomId) {
+    //private Boolean messageSent;
+
+    public Comment(String commentId, String ownerId, String title, String content, String chatRoomId, Boolean messageSent) {
         this.commentId = commentId;
         this.ownerId = ownerId;
         this.title = title;
         this.content = content;
         this.chatRoomId = chatRoomId;
+     //   this.messageSent = false;
     }
 
     public Comment() {
@@ -42,6 +45,10 @@ public class Comment {
         return chatRoomId;
     }
 
+   // public Boolean getMessageSent() {
+   //     return messageSent;
+  //  }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -61,6 +68,10 @@ public class Comment {
     public void setChatRoomId(String chatRoomId) {
         this.chatRoomId = chatRoomId;
     }
+
+   // public void setMessageSent(Boolean messageSent) {
+   //     this.messageSent = messageSent;
+   // }
 }
 
 
