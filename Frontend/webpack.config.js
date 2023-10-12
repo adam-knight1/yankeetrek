@@ -9,6 +9,9 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
+    commentPage: path.resolve(__dirname, 'src', 'pages', 'commentPage.js'),
+
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,6 +33,7 @@ module.exports = {
          {
             context: [
               '/example',
+              '/user',
             ],
             target: 'http://localhost:5001'
           }
