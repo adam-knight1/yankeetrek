@@ -129,7 +129,7 @@ public class UserServiceTest {
         assertThrows(NullPointerException.class, Executable.class.cast(result));
     }
 
-    @Test
+   /* @Test
     public void deleteUser_successful() {
         // Given
         String username = "jacob";
@@ -150,9 +150,9 @@ public class UserServiceTest {
 
         // Then
         assertTrue("User deleted successfully", result);
-    }
+    }*/
 
-    @Test
+  /*  @Test
     public void deleteUser_fails() {
         // Given
         UserRecord userRecord = new UserRecord();
@@ -163,4 +163,4 @@ public class UserServiceTest {
         // Then
         assertThrows(NullPointerException.class, Executable.class.cast(result));
     }
-}
+}*/

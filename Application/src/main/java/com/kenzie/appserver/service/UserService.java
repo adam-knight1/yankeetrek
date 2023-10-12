@@ -67,15 +67,20 @@ public class UserService {
         return Optional.empty();
     }
 
-    public boolean deleteUser(UserRecord userRecord) {
+    public boolean deleteUser(String userId) {
         try {
-            userRepository.delete(userRecord);
-            return true;
-        } catch (NotFoundException e) {
+            Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
+            if (optionalUserRecord.isPresent()) {
+                userRepository.delete(optionalUserRecord.get());
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
             System.out.println("Unable to delete user: " + e.getMessage());
             return false;
         }
     }
+
 
     public User transformToUser(UserRecord userRecord) {
         User user = new User();
