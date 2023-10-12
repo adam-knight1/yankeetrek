@@ -6,8 +6,6 @@ Resources:
       AttributeDefinitions:
         - AttributeName: commentId
           AttributeType: S
-        - AttributeName: ownerId
-          AttributeType: S
       KeySchema:
         - AttributeName: commentId
           KeyType: HASH

@@ -20,6 +20,7 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,4 +61,30 @@ public class UserControllerTest {
                     .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
+
+//    @Test
+//    public void createNewUser_Successful() {
+//        User user = new User();
+//        User persistedUser = userService.findByUserId(user.getUserId());
+//        mvc.perform(post(user))
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
