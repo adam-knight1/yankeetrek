@@ -24,37 +24,22 @@ public class ChatRoomController {
         this.chatRoomService = chatRoomService;
         this.commentService = commentService;
     }
-    //@postmapping
 
-//    @PostMapping
-//    public ResponseEntity<ChatRoomResponse> chatRoom(
-//            @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
-//        // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
-//        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getcommentMessage(), chatRoomCreateRequest
-//                .getownerId());
-//                //then convert the resulting chatrooms into a chatroomresponse and return it.
-//        ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-//        chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
-//        chatRoomResponse.setOwnerId(chatRooms.getUserId());
-//        chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
-//
-//        return ResponseEntity.ok(chatRoomResponse);
-//    }
-
-    /*@PostMapping
+   @PostMapping
     public ResponseEntity<ChatRoomResponse> chatRoom(
             @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
         // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
-        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getcommentMessage(), chatRoomCreateRequest
-                .getownerId());
+        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getSentComment(),
+                chatRoomCreateRequest.getOwnerId());
                 //then convert the resulting chatrooms into a chatroomresponse and return it.
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-        chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
-        chatRoomResponse.setOwnerId(chatRooms.getUserId());
-        chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
+       chatRoomResponse.setSentComment(chatRooms.getSentComment());
+       //chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
+       chatRoomResponse.setOwnerId(chatRooms.getOwnerId());
+       chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
 
         return ResponseEntity.ok(chatRoomResponse);
-    }*/
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<ChatRoomResponse>> getAllComments() {
@@ -64,8 +49,10 @@ public class ChatRoomController {
     }
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
+        chatRoomResponse.setSentComment(chatRoom.getSentComment());
+        //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
+        chatRoomResponse.setOwnerId(chatRoom.getOwnerId());
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
-        chatRoomResponse.setOwnerId(chatRoom.getUserId());
 
 //        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
 
@@ -75,5 +62,5 @@ public class ChatRoomController {
 
 
     }
-    //@getmapping
+
 }
