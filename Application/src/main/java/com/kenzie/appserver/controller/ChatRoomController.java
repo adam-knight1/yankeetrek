@@ -7,6 +7,7 @@ import com.kenzie.appserver.service.ChatRoomService;
 import com.kenzie.appserver.service.CommentService;
 import com.kenzie.appserver.service.model.ChatRoom;
 import com.kenzie.appserver.service.model.Comment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,37 +25,27 @@ public class ChatRoomController {
         this.chatRoomService = chatRoomService;
         this.commentService = commentService;
     }
-    //@postmapping
 
-//    @PostMapping
-//    public ResponseEntity<ChatRoomResponse> chatRoom(
-//            @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
-//        // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
-//        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getcommentMessage(), chatRoomCreateRequest
-//                .getownerId());
-//                //then convert the resulting chatrooms into a chatroomresponse and return it.
-//        ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-//        chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
-//        chatRoomResponse.setOwnerId(chatRooms.getUserId());
-//        chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
-//
-//        return ResponseEntity.ok(chatRoomResponse);
-//    }
-
-    /*@PostMapping
+   @PostMapping
     public ResponseEntity<ChatRoomResponse> chatRoom(
             @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
         // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
-        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getcommentMessage(), chatRoomCreateRequest
-                .getownerId());
+        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getSentComment(),
+                chatRoomCreateRequest.getOwnerId());
                 //then convert the resulting chatrooms into a chatroomresponse and return it.
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-        chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
-        chatRoomResponse.setOwnerId(chatRooms.getUserId());
-        chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
+       chatRoomResponse.setSentComment(chatRooms.getSentComment());
+       //chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
+       chatRoomResponse.setOwnerId(chatRooms.getOwnerId());
+       chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
 
         return ResponseEntity.ok(chatRoomResponse);
-    }*/
+    }
+    @PostMapping("/chatrooms")
+    public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoom chatRoom){
+        ChatRoom createdChatRoom = chatRoomService.createChatRoom(chatRoom);
+        return new ResponseEntity<>(createdChatRoom, HttpStatus.CREATED);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<ChatRoomResponse>> getAllComments() {
@@ -62,12 +53,15 @@ public class ChatRoomController {
         List<ChatRoomResponse> responses = chatRooms.stream().map(this::chatRoomResponse).collect(Collectors.toList());
         return ResponseEntity.ok(responses);
     }
+
+
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
+        chatRoomResponse.setSentComment(chatRoom.getSentComment());
+        //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
+        chatRoomResponse.setOwnerId(chatRoom.getOwnerId());
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
-        chatRoomResponse.setOwnerId(chatRoom.getUserId());
 
-//        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
 
         //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp()); //long versus string mismatch
 
@@ -75,5 +69,5 @@ public class ChatRoomController {
 
 
     }
-    //@getmapping
+
 }

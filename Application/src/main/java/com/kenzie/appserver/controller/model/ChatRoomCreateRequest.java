@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenzie.appserver.service.model.Comment;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -14,6 +15,9 @@ public class ChatRoomCreateRequest {
 
     @JsonProperty("timestamp")
     private String timeStamp;
+
+    @JsonProperty("sentComment")
+    private Comment sentComment;
 
     public String getOwnerId() {
         return ownerId;
@@ -37,5 +41,13 @@ public class ChatRoomCreateRequest {
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public Comment getSentComment() {
+        return sentComment;
+    }
+
+    public void setSentComment(Comment sentComment) {
+        this.sentComment = sentComment;
     }
 }
