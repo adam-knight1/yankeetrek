@@ -1,9 +1,7 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.CommentResponse;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserResponse;
-import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
@@ -11,9 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.UUID;
 
-import static java.util.UUID.randomUUID;
+
 
 @RestController
 @RequestMapping("/user")
@@ -51,23 +48,25 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") UUID userId) {
-        Optional<User> optionalUpdatedUser = userService.updateUser(userService.findByUserId(userId.toString()));
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId) {
+        Optional<User> optionalUpdatedUser = userService.updateUser(userService.findByUserId(userId));
         return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("userRecord")UserRecord userRecord) {
-        if(userService.deleteUser(userRecord)) {
-            return  ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        if(userService.deleteUser(userId)) {
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
+
+
     private UserResponse userToResponse(User user) {
         UserResponse userResponse = new UserResponse();
-        userResponse.setUserId(user.getUserId().toString());
+        userResponse.setUserId(user.getUserId());
         userResponse.setUsername(user.getUsername());
         userResponse.setPassword(user.getPassword());
         userResponse.setEmail(user.getEmail());

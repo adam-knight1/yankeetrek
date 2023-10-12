@@ -27,6 +27,7 @@ import java.util.List;
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
 
+
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
         chatRoomRecord.setOwnerId(ownerId);
         chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
@@ -37,6 +38,7 @@ import java.util.List;
 
         return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(),
                 chatRoomRecord.getComment());
+
     }
 
 

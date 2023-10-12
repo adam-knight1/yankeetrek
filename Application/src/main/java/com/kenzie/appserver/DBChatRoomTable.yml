@@ -6,13 +6,9 @@ Resources:
       AttributeDefinitions:
         - AttributeName: ownerId
           AttributeType: S
-        - AttributeName: topicName
-          AttributeType: S
       KeySchema:
         - AttributeName: ownerId
           KeyType: HASH
-        - AttributeName: topicName
-          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5

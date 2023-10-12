@@ -1,6 +1,5 @@
 package com.kenzie.appserver.service;
 
-import com.amazonaws.services.kms.model.NotFoundException;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 
@@ -9,21 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {this.userRepository = userRepository;}
 
     public User findByUserId(String userId) {
-        User userFromBackend = userRepository
+        return userRepository
                 .findById(userId)
                 .map(user -> new User(user.getUsername(), user.getPassword(), user.getEmail()))
                 .orElse(null);
-        return userFromBackend;
     }
 
     public User createNewUser(User user) {
@@ -40,7 +37,7 @@ public class UserService {
             try {
                 userRepository.save(userRecord);
                 return user;
-                } catch (IllegalArgumentException e) { //custom exception
+                } catch (IllegalArgumentException e) {
                 System.out.println("unable to save user" + e.getMessage());
                 return null;
             }
@@ -50,7 +47,7 @@ public class UserService {
     }
 
     public Optional<User> updateUser(User user) {
-        Optional<UserRecord> optionalExistingUser = userRepository.findById(user.getUserId().toString());
+        Optional<UserRecord> optionalExistingUser = userRepository.findById(user.getUserId());
 
         if (optionalExistingUser.isPresent()) {
             UserRecord existingUser = optionalExistingUser.get();
@@ -67,15 +64,20 @@ public class UserService {
         return Optional.empty();
     }
 
-    public boolean deleteUser(UserRecord userRecord) {
+    public boolean deleteUser(String userId) {
         try {
-            userRepository.delete(userRecord);
-            return true;
-        } catch (NotFoundException e) {
+            Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
+            if (optionalUserRecord.isPresent()) {
+                userRepository.delete(optionalUserRecord.get());
+                return true;
+            }
+            return false;
+        } catch (NullPointerException e) {
             System.out.println("Unable to delete user: " + e.getMessage());
             return false;
         }
     }
+
 
     public User transformToUser(UserRecord userRecord) {
         User user = new User();
