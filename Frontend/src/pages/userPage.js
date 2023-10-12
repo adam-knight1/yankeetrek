@@ -33,7 +33,7 @@ class UserPage extends BaseClass {
         let email = document.getElementById("email-field").value;
         let password = document.getElementById("password-field").value;
 
-        let createdUser = await this.client.createNewUser(username, email, password, this.errorHandler);
+        let createdUser = await this.client.createUser(username, email, password, this.errorHandler);
 
         this.dataStore.set("user", createdUser);
 
