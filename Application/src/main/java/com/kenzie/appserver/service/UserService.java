@@ -1,6 +1,5 @@
 package com.kenzie.appserver.service;
 
-import com.amazonaws.services.kms.model.NotFoundException;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -19,11 +17,10 @@ public class UserService {
     public UserService(UserRepository userRepository) {this.userRepository = userRepository;}
 
     public User findByUserId(String userId) {
-        User userFromBackend = userRepository
+        return userRepository
                 .findById(userId)
                 .map(user -> new User(user.getUsername(), user.getPassword(), user.getEmail()))
                 .orElse(null);
-        return userFromBackend;
     }
 
     public User createNewUser(User user) {
@@ -50,7 +47,7 @@ public class UserService {
     }
 
     public Optional<User> updateUser(User user) {
-        Optional<UserRecord> optionalExistingUser = userRepository.findById(user.getUserId().toString());
+        Optional<UserRecord> optionalExistingUser = userRepository.findById(user.getUserId());
 
         if (optionalExistingUser.isPresent()) {
             UserRecord existingUser = optionalExistingUser.get();

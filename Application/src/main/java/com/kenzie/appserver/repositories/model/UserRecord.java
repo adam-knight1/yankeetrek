@@ -2,19 +2,17 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
 @DynamoDBTable(tableName = "User")
 public class UserRecord {
     @Id
     @DynamoDBHashKey(attributeName = "userId")
-    private UUID userId;
+    private String userId;
    
     @DynamoDBAttribute(attributeName = "email")
     private String email;
@@ -28,9 +26,9 @@ public class UserRecord {
     @DynamoDBAttribute(attributeName = "hobbies")
     private ArrayList<String> hobbies;
 
-    public UUID getUserId() { return userId; }
+    public String getUserId() { return userId; }
 
-    public void setUserId(UUID userId) { this.userId = userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getUsername() {
         return username;

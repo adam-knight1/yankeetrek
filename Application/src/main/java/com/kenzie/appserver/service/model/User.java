@@ -5,27 +5,27 @@ import java.util.UUID;
 
 public class User {
     //created by adam
-    UUID userId;
+    String userId;
     String username;
     String password;
     String email;
 
     public User() {
-        this.userId = UUID.randomUUID();
+        this.userId = UUID.randomUUID().toString();
     }
 
     public User(String username, String password, String email) {
-        this.userId = UUID.randomUUID();
+        this.userId = UUID.randomUUID().toString();
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

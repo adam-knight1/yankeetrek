@@ -32,7 +32,7 @@ public class UserServiceTest {
     @Test
     public void findByUserId_successful() {
         // Given
-        UUID id = randomUUID();
+        String id = randomUUID().toString();
 
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(id);
@@ -41,8 +41,8 @@ public class UserServiceTest {
         user.setUserId(id);
 
         // When
-        when(userService.findByUserId(id.toString())).thenReturn(user);
-        User userResult = userService.findByUserId(id.toString());
+        when(userService.findByUserId(id)).thenReturn(user);
+        User userResult = userService.findByUserId(id);
 
         // Then
         Assertions.assertEquals(id, userResult.getUserId(), "User ids match");
@@ -147,8 +147,8 @@ public class UserServiceTest {
         userRecord.setEmail(user.getEmail());
 
         // When
-        when(userService.deleteUser(user.getUserId().toString())).thenReturn(true);
-        boolean result = userService.deleteUser(user.getUserId().toString());
+        when(userService.deleteUser(user.getUserId())).thenReturn(true);
+        boolean result = userService.deleteUser(user.getUserId());
 
         // Then
         assertTrue("User deleted successfully", result);
@@ -160,12 +160,12 @@ public class UserServiceTest {
         UserRecord userRecord = mock(UserRecord.class);
 
         // When
-        when(userRecord.getUserId()).thenReturn(randomUUID());
-        when(userService.deleteUser(userRecord.getUserId().toString())).thenThrow(new NullPointerException());
+        when(userRecord.getUserId()).thenReturn(randomUUID().toString());
+        when(userService.deleteUser(userRecord.getUserId())).thenThrow(new NullPointerException());
 
         // Then
         Assertions.assertThrows(NullPointerException.class,
-                () -> userService.deleteUser(userRecord.getUserId().toString()),
+                () -> userService.deleteUser(userRecord.getUserId()),
                 "Should throw NullPointerException");
     }
 }
