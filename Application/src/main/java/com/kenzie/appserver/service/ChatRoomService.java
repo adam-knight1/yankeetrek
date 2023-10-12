@@ -26,9 +26,6 @@ import java.util.List;
 
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
-        if (commentService.addNewComment(sentComment)){//.getMessageSent should be here from the comment class. i need something to close out of the message was sent or not
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
-        }
 
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
         chatRoomRecord.setOwnerId(ownerId);
@@ -38,14 +35,16 @@ import java.util.List;
         chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());
         chatRoomRepository.save(chatRoomRecord);
 
-        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp());
+        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(),
+                chatRoomRecord.getComment());
     }
 
 
     public List<ChatRoom> findAll(){
         List<ChatRoom> chatRooms = new ArrayList<>();
         chatRoomRepository.findAll()
-                .forEach(chatRoomRecord -> chatRooms.add(new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp())));
+                .forEach(chatRoomRecord -> chatRooms.add(new ChatRoom(chatRoomRecord.getOwnerId(),
+                        chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(), chatRoomRecord.getComment())));
         return chatRooms;
     }
 
