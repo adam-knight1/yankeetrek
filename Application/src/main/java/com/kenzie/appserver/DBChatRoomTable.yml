@@ -6,8 +6,6 @@ Resources:
       AttributeDefinitions:
         - AttributeName: ownerId
           AttributeType: S
-        - AttributeName: topicName
-          AttributeType: S
       KeySchema:
         - AttributeName: ownerId
           KeyType: HASH

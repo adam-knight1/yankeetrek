@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {this.userRepository = userRepository;}
@@ -37,7 +37,7 @@ public class UserService {
             try {
                 userRepository.save(userRecord);
                 return user;
-                } catch (IllegalArgumentException e) { //custom exception
+                } catch (IllegalArgumentException e) {
                 System.out.println("unable to save user" + e.getMessage());
                 return null;
             }
@@ -72,7 +72,7 @@ public class UserService {
                 return true;
             }
             return false;
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println("Unable to delete user: " + e.getMessage());
             return false;
         }
