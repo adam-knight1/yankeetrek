@@ -11,8 +11,6 @@ Resources:
       KeySchema:
         - AttributeName: commentId
           KeyType: HASH
-        - AttributeName: ownerId
-          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
