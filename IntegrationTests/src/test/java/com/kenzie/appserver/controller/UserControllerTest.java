@@ -2,25 +2,18 @@ package com.kenzie.appserver.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.IntegrationTest;
-import com.kenzie.appserver.controller.model.UserResponse;
+import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.service.UserService;
-import com.kenzie.appserver.service.model.Example;
 import com.kenzie.appserver.service.model.User;
 import net.andreinc.mockneat.MockNeat;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.util.UUID;
-
-import static java.util.UUID.randomUUID;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,12 +38,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("userId")
                         .value(Matchers.is(user.getUserId())))
                 .andExpect(status().isOk());
-//                User user = new User();
-//        User persistedUser = userService.createNewUser(user);
-//
-//        mvc.perform(get("/{userId}", persistedUser.getUserId())
-//                    .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
     }
 
     @Test
@@ -62,29 +49,85 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-//    @Test
-//    public void createNewUser_Successful() {
-//        User user = new User();
-//        User persistedUser = userService.findByUserId(user.getUserId());
-//        mvc.perform(post(user))
-//    }
+    @Test
+    public void createNewUser_Successful() throws Exception {
+        String email = "random@email.com";
+        User user = new User();
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
+        userCreateRequest.setEmail(email);
 
+        mvc.perform(post("/user")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(userCreateRequest)))
+                .andExpect(jsonPath(("userId"))
+                        .exists())
+                .andExpect(jsonPath("email")
+                        .value(is(email)))
+                .andExpect(status().isCreated());
+    }
 
+    @Test
+    public void createNewUser_NullInfo_Fails() throws Exception {
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
+        mvc.perform(post("/user")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(userCreateRequest)))
+                .andExpect(jsonPath(("userId"))
+                        .doesNotExist())
+                .andExpect(status().isBadRequest());
+    }
 
+    @Test
+    public void updateUser_Successful() throws Exception {
+        String email = "random@email.com";
+        User user = new User();
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
+        mvc.perform(put("/user")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(userCreateRequest)))
+                .andExpect(jsonPath(("userId"))
+                        .value(is(user.getUserId())))
+                .andExpect(status().isOk());
+    }
 
+    @Test
+    public void updateUser_NonExistentUser_Fails() throws Exception {
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
+        mvc.perform(put("/user")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(userCreateRequest)))
+                .andExpect(jsonPath(("userId"))
+                        .value(is("123456")))
+                .andExpect(status().isNotFound());
+    }
 
+    @Test
+    public void deleteUser_ExistingUser_Successful() throws Exception {
+        User user = new User();
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
+        mvc.perform(delete("/user")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("userId")
+                        .value(is(user.getUserId())))
+                .andExpect(status().isNoContent());
+    }
 
+    @Test
+    public void deleteUser_NonExistentUser_Fails() throws Exception {
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
-
-
-
-
-
-
-
-
+        mvc.perform(delete("/user")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("userId")
+                        .doesNotExist())
+                .andExpect(status().isNotFound());
+    }
 }
