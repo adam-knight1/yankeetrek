@@ -21,7 +21,20 @@ class UserPage extends BaseClass {
     }
 
     async renderUser() {
-        //update the ui here - adam
+
+            let resultArea = document.getElementById("result-info");
+
+            const example = this.dataStore.get("user");
+
+            if (example) {
+                resultArea.innerHTML = `
+                    <div>ID: ${example.id}</div>
+                    <div>Name: ${example.name}</div>
+                `
+            } else {
+                resultArea.innerHTML = "No Item";
+            }
+
     }
 
     async onCreate(event) {
