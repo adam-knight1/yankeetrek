@@ -7,6 +7,7 @@ import com.kenzie.appserver.service.ChatRoomService;
 import com.kenzie.appserver.service.CommentService;
 import com.kenzie.appserver.service.model.ChatRoom;
 import com.kenzie.appserver.service.model.Comment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,11 @@ public class ChatRoomController {
 
         return ResponseEntity.ok(chatRoomResponse);
     }
+    @PostMapping("/chatrooms")
+    public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoom chatRoom){
+        ChatRoom createdChatRoom = chatRoomService.createChatRoom(chatRoom);
+        return new ResponseEntity<>(createdChatRoom, HttpStatus.CREATED);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<ChatRoomResponse>> getAllComments() {
@@ -47,6 +53,8 @@ public class ChatRoomController {
         List<ChatRoomResponse> responses = chatRooms.stream().map(this::chatRoomResponse).collect(Collectors.toList());
         return ResponseEntity.ok(responses);
     }
+
+
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
         chatRoomResponse.setSentComment(chatRoom.getSentComment());
@@ -54,7 +62,6 @@ public class ChatRoomController {
         chatRoomResponse.setOwnerId(chatRoom.getOwnerId());
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
 
-//        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
 
         //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp()); //long versus string mismatch
 

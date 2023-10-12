@@ -15,10 +15,12 @@ import java.util.List;
     public class ChatRoomService {
     private ChatRoomRepository chatRoomRepository;
     private CommentService commentService;
+    private List<ChatRoom> chatRooms;
 
     public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService ){
         this.chatRoomRepository = chatRoomRepository;
         this.commentService = commentService;
+        this.chatRooms = new ArrayList<>();
     }
 
     //Do you all think "sentComment" should be listed as Comment or String? -ALEXIS
@@ -50,4 +52,8 @@ import java.util.List;
         return chatRooms;
     }
 
+    public ChatRoom createChatRoom(ChatRoom chatRoom) {
+        chatRooms.add(chatRoom);
+        return chatRoom;
+    }
 }
