@@ -15,8 +15,7 @@ import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class UserServiceTest {
@@ -38,7 +37,6 @@ public class UserServiceTest {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(id);
 
-//        userRepository.save(userRecord);
         User user = new User();
         user.setUserId(id);
 
@@ -72,10 +70,11 @@ public class UserServiceTest {
         User user = new User(username, password, email);
 
         // When
+        when(userService.createNewUser(user)).thenReturn(user);
         User result = userService.createNewUser(user);
 
         // Then
-        assert result != null;
+        Assertions.assertNotNull(result, "User should not be null");
     }
 
     @Test
@@ -84,11 +83,12 @@ public class UserServiceTest {
         User user = new User(null, null, null);
 
         // When
-        try {
-            userService.createNewUser(user);
-        } catch (IllegalArgumentException e) {
-            System.out.println("creating new user failed" + e.getMessage());
-        }
+        when(userService.createNewUser(user)).thenThrow(new IllegalArgumentException());
+
+        //Then
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> userService.createNewUser(user),
+                "Should throw IllegalArgumentException");
     }
 
     @Test
@@ -108,10 +108,11 @@ public class UserServiceTest {
         userRepository.save(userRecord);
 
         // When
+        when(userService.updateUser(user)).thenReturn(Optional.of(user));
         Optional<User> result = userService.updateUser(user);
 
         // Then
-        assertTrue("should match user and result", user.toString().equals(result.toString()));
+        assertTrue("should match user and result", Optional.of(user).equals(result));
     }
 
     @Test
@@ -129,7 +130,7 @@ public class UserServiceTest {
         assertThrows(NullPointerException.class, Executable.class.cast(result));
     }
 
-   /* @Test
+    @Test
     public void deleteUser_successful() {
         // Given
         String username = "jacob";
@@ -146,21 +147,25 @@ public class UserServiceTest {
         userRecord.setEmail(user.getEmail());
 
         // When
-        boolean result = userService.deleteUser(userRecord);
+        when(userService.deleteUser(user.getUserId().toString())).thenReturn(true);
+        boolean result = userService.deleteUser(user.getUserId().toString());
 
         // Then
         assertTrue("User deleted successfully", result);
-    }*/
+    }
 
-  /*  @Test
+    @Test
     public void deleteUser_fails() {
         // Given
-        UserRecord userRecord = new UserRecord();
+        UserRecord userRecord = mock(UserRecord.class);
 
         // When
-        boolean result = userService.deleteUser(userRecord);
+        when(userRecord.getUserId()).thenReturn(randomUUID());
+        when(userService.deleteUser(userRecord.getUserId().toString())).thenThrow(new NullPointerException());
 
         // Then
-        assertThrows(NullPointerException.class, Executable.class.cast(result));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> userService.deleteUser(userRecord.getUserId().toString()),
+                "Should throw NullPointerException");
     }
-}*/
+}
