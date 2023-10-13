@@ -30,7 +30,7 @@ public class UserControllerTest {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void getUser_Exists() throws Exception {
+    public void getUser_Successful() throws Exception {
         User user = new User();
         User persistedUser = userService.createNewUser(user);
         mvc.perform(get("/{userId}", persistedUser.getUserId())
