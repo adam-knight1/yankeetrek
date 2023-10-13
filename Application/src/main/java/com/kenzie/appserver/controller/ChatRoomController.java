@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.ChatRoomCreateRequest;
 import com.kenzie.appserver.controller.model.ChatRoomResponse;
+import com.kenzie.appserver.controller.model.CommentCreateRequest;
 import com.kenzie.appserver.controller.model.CommentResponse;
 import com.kenzie.appserver.service.ChatRoomService;
 import com.kenzie.appserver.service.CommentService;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.UUID.randomUUID;
+
 @RestController
 @RequestMapping("/chatRoom")
 public class ChatRoomController {
@@ -26,20 +29,22 @@ public class ChatRoomController {
         this.commentService = commentService;
     }
 
-   @PostMapping
-    public ResponseEntity<ChatRoomResponse> chatRoom(
-            @RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
-        // call the chatroomservice.sendcomment method with the commentmessafe and owneris from the reqquest.
-        ChatRoom chatRooms = chatRoomService.sendComment(chatRoomCreateRequest.getSentComment(),
-                chatRoomCreateRequest.getOwnerId());
-                //then convert the resulting chatrooms into a chatroomresponse and return it.
-        ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-       chatRoomResponse.setSentComment(chatRooms.getSentComment());
-       //chatRoomResponse.setTimestamp(chatRooms.getTimeStamp());
-       chatRoomResponse.setOwnerId(chatRooms.getOwnerId());
-       chatRoomResponse.setChatRoomId(chatRooms.getChatRoomId());
-
-        return ResponseEntity.ok(chatRoomResponse);
+   @PostMapping("/chatrooms/{chatRoomId}/comments")
+    public ResponseEntity<String> sendComment(
+            @PathVariable String chatRoomId, @RequestBody CommentCreateRequest commentCreateRequest){
+       Comment comment = new Comment(
+               randomUUID().toString(),
+               commentCreateRequest.getOwnerId(),
+               commentCreateRequest.getTitle(),
+               commentCreateRequest.getContent(),
+               commentCreateRequest.getChatRoomId()
+       );
+       try {
+           chatRoomService.sendComment(comment, chatRoomId);
+       }catch (IllegalArgumentException e){
+           return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+       }
+       return ResponseEntity.ok("Message sent successfully");
     }
     @PostMapping("/chatrooms")
     public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoom chatRoom){
@@ -53,6 +58,12 @@ public class ChatRoomController {
         List<ChatRoomResponse> responses = chatRooms.stream().map(this::chatRoomResponse).collect(Collectors.toList());
         return ResponseEntity.ok(responses);
     }
+
+ /*   @PutMapping("/chatrooms/{chatRoomId}")
+    public ResponseEntity<ChatRoomResponse> updateChatRoom (@PathVariable ("ChatRoomId") String chatRoomId, @RequestBody
+                                                            ChatRoomCreateRequest request){
+        List<ChatRoom> updatedChatRoom  = chatRoomService.
+    }*/
 
 
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {

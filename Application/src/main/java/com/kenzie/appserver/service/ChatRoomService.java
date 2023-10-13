@@ -16,10 +16,12 @@ import java.util.List;
     private ChatRoomRepository chatRoomRepository;
     private CommentService commentService;
     private List<ChatRoom> chatRooms;
+    private UserService userService;
 
-    public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService ){
+    public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService, UserService userService ){
         this.chatRoomRepository = chatRoomRepository;
         this.commentService = commentService;
+        this.userService = userService;
         this.chatRooms = new ArrayList<>();
     }
 
@@ -28,8 +30,6 @@ import java.util.List;
 
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
-
-
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
         chatRoomRecord.setOwnerId(ownerId);
         chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
@@ -43,7 +43,6 @@ import java.util.List;
 
     }
 
-
     public List<ChatRoom> findAll(){
         List<ChatRoom> chatRooms = new ArrayList<>();
         chatRoomRepository.findAll()
@@ -56,4 +55,16 @@ import java.util.List;
         chatRooms.add(chatRoom);
         return chatRoom;
     }
+
+    public ChatRoom getChatRoomById(String chatRoomId){
+        for (ChatRoom chatRoom : chatRooms){
+            if (chatRoom.getChatRoomId().equals(chatRoomId))
+                return chatRoom;
+        }
+        return null;//return null if the chat room is not found or do we want an exception?
+    }
+    public void deleteChatRoom (ChatRoom chatRoom){
+        chatRooms.remove(chatRoom);
+    }
+
 }
