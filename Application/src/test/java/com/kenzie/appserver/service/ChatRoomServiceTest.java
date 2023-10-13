@@ -1,7 +1,9 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChatRoomRepository;
+import com.kenzie.appserver.repositories.CommentRepository;
 import com.kenzie.appserver.repositories.ExampleRepository;
+import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.ChatRoomRecord;
 import com.kenzie.appserver.repositories.model.ExampleRecord;
 import com.kenzie.appserver.service.model.ChatRoom;
@@ -19,8 +21,12 @@ import static org.mockito.Mockito.when;
 public class ChatRoomServiceTest {
     private ChatRoomRepository chatRoomRepository;
     private ChatRoomService chatRoomService;
+    private CommentRepository commentRepository;
     private CommentService commentService;
     private UserService userService;
+    UserRepository userRepository;
+
+
 
     @BeforeEach
     void setup() {
@@ -30,7 +36,7 @@ public class ChatRoomServiceTest {
         chatRoomService = new ChatRoomService(chatRoomRepository,commentService, userService);
     }
     /** ------------------------------------------------------------------------
-     *  CHATROOMSERVICE.FINDBYID
+     *  CHATROOMSERVICE.SendComment
      *  ------------------------------------------------------------------------ **/
 
     @Test
