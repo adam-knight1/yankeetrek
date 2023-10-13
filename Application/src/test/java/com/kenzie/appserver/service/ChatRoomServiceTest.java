@@ -20,12 +20,14 @@ public class ChatRoomServiceTest {
     private ChatRoomRepository chatRoomRepository;
     private ChatRoomService chatRoomService;
     private CommentService commentService;
+    private UserService userService;
 
     @BeforeEach
     void setup() {
         chatRoomRepository = mock(ChatRoomRepository.class);
         commentService = mock(CommentService.class);
-        chatRoomService = new ChatRoomService(chatRoomRepository,commentService);
+        userService = mock(UserService.class);
+        chatRoomService = new ChatRoomService(chatRoomRepository,commentService, userService);
     }
     /** ------------------------------------------------------------------------
      *  CHATROOMSERVICE.FINDBYID

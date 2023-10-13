@@ -69,6 +69,7 @@ public class UserControllerTest {
 
     @Test
     public void createNewUser_NullInfo_Fails() throws Exception {
+
         mvc.perform(post("/user")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
