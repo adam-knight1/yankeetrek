@@ -40,7 +40,6 @@ export default class ChatRoomClient extends BaseClass {
             const response = await this.client.post(`chatroom`, { "name" : name });
             return response.data;
         } catch (error) {
-            this.handleError("createChatRoom", error, errorCallback);
         }
     }
 
