@@ -21,7 +21,7 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 public class UserServiceTest {
 
     private UserService userService;
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setup() {
@@ -34,9 +34,6 @@ public class UserServiceTest {
         // Given
         String id = randomUUID().toString();
 
-        UserRecord userRecord = new UserRecord();
-        userRecord.setUserId(id);
-
         User user = new User();
         user.setUserId(id);
 
@@ -45,7 +42,7 @@ public class UserServiceTest {
         User userResult = userService.findByUserId(id);
 
         // Then
-        Assertions.assertEquals(id, userResult.getUserId(), "User ids match");
+        Assertions.assertEquals(id, userResult.getUserId(), "User ids should match");
     }
 
     @Test
