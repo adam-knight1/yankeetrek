@@ -71,17 +71,30 @@ public class ChatRoomController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ChatRoomResponse>> getAllComments() {
+    public ResponseEntity<List<ChatRoomResponse>> getAllChatRooms() {
         List<ChatRoom> chatRooms = chatRoomService.findAll();
         List<ChatRoomResponse> responses = chatRooms.stream().map(this::chatRoomResponse).collect(Collectors.toList());
         return ResponseEntity.ok(responses);
     }
 
- /*   @PutMapping("/chatrooms/{chatRoomId}")
-    public ResponseEntity<ChatRoomResponse> updateChatRoom (@PathVariable ("ChatRoomId") String chatRoomId, @RequestBody
-                                                            ChatRoomCreateRequest request){
-        List<ChatRoom> updatedChatRoom  = chatRoomService.
+  /* @PutMapping("/chatrooms/{chatRoomId}")
+    public ResponseEntity<ChatRoomResponse> updateChatRoomById (@PathVariable ("ChatRoomId") String chatRoomId, @RequestBody
+                                                            ChatRoom updatedChatRoom){
+        if (chatRoomService.chatRoomExists(chatRoomId)){
+            chatRoomService.updateChatRoom
+        }
     }*/
+
+    @GetMapping("/chatrooms/{chatRoomId}")
+    public ResponseEntity<ChatRoom> getChatRoomById(@PathVariable ("chatRoomId") String chatRoomId){
+    ChatRoom chatRoom = chatRoomService.getChatRoomById(chatRoomId);
+
+    if (chatRoom != null){
+        return ResponseEntity.ok(chatRoom);
+    }else{
+        return ResponseEntity.notFound().build();
+    }
+}
 
 
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
