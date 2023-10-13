@@ -19,12 +19,10 @@ import static org.mockito.Mockito.when;
 public class CommentServiceTest {
 
     private CommentService commentService;
-    private CommentRepository commentRepository;
 
     @BeforeEach
     void setup() {
         commentService = mock(CommentService.class);
-        commentRepository = mock(CommentRepository.class);
     }
 
     @Test
