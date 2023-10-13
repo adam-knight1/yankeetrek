@@ -18,7 +18,7 @@ export default class UserClient {
         }
     }
 
-    async createNewUser(username, password, email) {
+    async createUser(username, password, email) {
         try {
             const response = await this.client.post('/user', {
                 username: username,
@@ -51,4 +51,4 @@ export default class UserClient {
            throw error;
        }
    }
-
+   }

@@ -21,22 +21,7 @@ class UserPage extends BaseClass {
     }
 
     async renderUser() {
-    #merge conflict
 
-         /*   let resultArea = document.getElementById("result-info");
-
-            const example = this.dataStore.get("user");
-
-            if (example) {
-                resultArea.innerHTML = `
-                    <div>ID: ${example.id}</div>
-                    <div>Name: ${example.name}</div>
-                `
-            } else {
-                resultArea.innerHTML = "No Item";
-            }
-
-        //update the ui here - adam*/
     }
 
     async onCreate(event) {
