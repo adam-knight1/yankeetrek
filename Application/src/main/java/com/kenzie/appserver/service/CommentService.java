@@ -51,7 +51,7 @@ public class CommentService {
         try {
             commentRepository.save(commentRecord);
             return comment;
-        } catch (Exception e) {  //maybe add a custom exception class for this -adam
+        } catch (IllegalArgumentException e) {  //maybe add a custom exception class for this -adam
             System.out.println("unable to save comment" + e.getMessage());
             return null;
         }
@@ -77,16 +77,6 @@ public class CommentService {
         return Optional.empty();
     }
 
-    private Comment transformToComment(CommentRecord commentRecord) {
-        Comment comment = new Comment();
-        comment.setCommentId(commentRecord.getCommentId());
-        comment.setOwnerId(commentRecord.getOwnerId());
-        comment.setChatRoomId(commentRecord.getChatRoomId());
-        comment.setTitle(commentRecord.getTitle());
-        comment.setContent(commentRecord.getContent());
-        return comment;
-    }
-
     public boolean deleteComment(String id) {
         try {
             commentRepository.deleteById(id);
@@ -95,6 +85,16 @@ public class CommentService {
             System.out.println("Unable to delete comment: " + e.getMessage());
             return false;
         }
+    }
+
+    private Comment transformToComment(CommentRecord commentRecord) {
+        Comment comment = new Comment();
+        comment.setCommentId(commentRecord.getCommentId());
+        comment.setOwnerId(commentRecord.getOwnerId());
+        comment.setChatRoomId(commentRecord.getChatRoomId());
+        comment.setTitle(commentRecord.getTitle());
+        comment.setContent(commentRecord.getContent());
+        return comment;
     }
 }
 

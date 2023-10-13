@@ -30,13 +30,13 @@ public class UserControllerTest {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void getUser_Exists() throws Exception {
+    public void getUser_Successful() throws Exception {
         User user = new User();
         User persistedUser = userService.createNewUser(user);
         mvc.perform(get("/{userId}", persistedUser.getUserId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("userId")
-                        .value(Matchers.is(user.getUserId())))
+                        .value(is(user.getUserId())))
                 .andExpect(status().isOk());
     }
 
@@ -46,7 +46,7 @@ public class UserControllerTest {
 
         mvc.perform(get("/{userId}", userId)
                     .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -63,18 +63,17 @@ public class UserControllerTest {
                 .andExpect(jsonPath(("userId"))
                         .exists())
                 .andExpect(jsonPath("email")
-                        .value(is(email)))
-                .andExpect(status().isCreated());
+                        .value(email))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void createNewUser_NullInfo_Fails() throws Exception {
-        UserCreateRequest userCreateRequest = new UserCreateRequest();
 
         mvc.perform(post("/user")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(userCreateRequest)))
+                        .content(mapper.writeValueAsString(null)))
                 .andExpect(jsonPath(("userId"))
                         .doesNotExist())
                 .andExpect(status().isBadRequest());
