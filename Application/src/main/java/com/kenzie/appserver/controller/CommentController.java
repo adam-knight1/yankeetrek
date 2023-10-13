@@ -56,7 +56,7 @@ public class CommentController {
         try {
             commentService.addNewComment(comment);
         } catch (IllegalArgumentException e) {
-           // return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok(commentToResponse(comment));
     }
