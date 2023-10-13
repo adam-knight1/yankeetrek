@@ -26,6 +26,10 @@ public class Comment {
     public Comment() {
     }
 
+    public Comment(String ownerId, String content) {
+    }
+
+
     public String getCommentId() {
         return commentId;
     }

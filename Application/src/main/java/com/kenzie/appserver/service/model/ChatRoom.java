@@ -1,5 +1,7 @@
 package com.kenzie.appserver.service.model;
 
+import java.util.List;
+
 public class ChatRoom {
     //added by adam
     private final String ownerId;
@@ -29,5 +31,9 @@ public class ChatRoom {
 
     public String getSentComment() {
         return sentComment;
+    }
+
+
+    public void addComment(Comment newComment) {
     }
 }
