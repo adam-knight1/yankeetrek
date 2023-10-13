@@ -8,6 +8,7 @@ import com.kenzie.appserver.service.ChatRoomService;
 import com.kenzie.appserver.service.CommentService;
 import com.kenzie.appserver.service.model.ChatRoom;
 import com.kenzie.appserver.service.model.Comment;
+import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +48,26 @@ public class ChatRoomController {
        return ResponseEntity.ok("Message sent successfully");
     }
     @PostMapping("/chatrooms")
-    public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoom chatRoom){
+    public ResponseEntity<ChatRoom> createChatRoom1(@RequestBody ChatRoom chatRoom){
         ChatRoom createdChatRoom = chatRoomService.createChatRoom(chatRoom);
         return new ResponseEntity<>(createdChatRoom, HttpStatus.CREATED);
+    }
+
+    //WHICH IS BETTER? createchatroom1 or createchatroom2?
+    @PostMapping("/chatrooms")
+    public ResponseEntity<ChatRoomResponse> createChatRoom2(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
+        ChatRoom chatRoom = new ChatRoom(
+                chatRoomCreateRequest.getOwnerId(),
+                chatRoomCreateRequest.getChatRoomId(),
+                chatRoomCreateRequest.getTimeStamp(),
+                chatRoomCreateRequest.getSentComment()
+        );
+        try {
+            chatRoomService.createChatRoom(chatRoom);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return  ResponseEntity.ok(chatRoomResponse(chatRoom));
     }
 
     @GetMapping("/all")
@@ -68,14 +86,10 @@ public class ChatRoomController {
 
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-        chatRoomResponse.setSentComment(chatRoom.getSentComment());
-        //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
+      //  chatRoomResponse.setSentComment(chatRoom.getSentComment()); having trouble getting this working
+        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
         chatRoomResponse.setOwnerId(chatRoom.getOwnerId());
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
-
-
-        //chatRoomResponse.setTimestamp(chatRoom.getTimeStamp()); //long versus string mismatch
-
         return chatRoomResponse;
 
 

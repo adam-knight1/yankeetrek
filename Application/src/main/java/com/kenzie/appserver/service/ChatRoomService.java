@@ -2,6 +2,7 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChatRoomRepository;
 import com.kenzie.appserver.repositories.model.ChatRoomRecord;
+import com.kenzie.appserver.repositories.model.CommentRecord;
 import com.kenzie.appserver.service.model.ChatRoom;
 import com.kenzie.appserver.service.model.Comment;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.util.List;
 
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
+
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
         chatRoomRecord.setOwnerId(ownerId);
         chatRoomRecord.setTopicName(chatRoomRecord.getTopicName());
