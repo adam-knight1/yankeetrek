@@ -49,11 +49,11 @@ public class ChatRoomController {
     }
     //WHICH IS BETTER? createchatroom1 or createchatroom2?
     //this is option 1
-    @PostMapping("/chatrooms")
+  /*  @PostMapping("/chatrooms")
     public ResponseEntity<ChatRoom> createChatRoom1(@RequestBody ChatRoom chatRoom){
         ChatRoom createdChatRoom = chatRoomService.createChatRoom(chatRoom);
         return new ResponseEntity<>(createdChatRoom, HttpStatus.CREATED);
-    }
+    }*/
 
   //this is option 2
     @PostMapping("/chatrooms")
