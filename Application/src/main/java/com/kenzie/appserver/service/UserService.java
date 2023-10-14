@@ -20,21 +20,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-/*    public User findUserByUserId(String userId) {
-        System.out.println("Searching for userId: " + userId);
-        User user = userRepository
-                .findById(userId)
-                .map(u -> new User(u.getUserId())
-
-        if (user == null) {
-            System.out.println("User with userId: " + userId + " not found.");
-        } else {
-            System.out.println("User found: " + user);
-        }
-        return user;
-    }*/
-
-
 
     public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
