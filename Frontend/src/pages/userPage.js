@@ -45,14 +45,29 @@ class UserPage extends BaseClass {
     }
 
 
-    async onUpdate(event) {
-        event.preventDefault();
+   async onUpdate(event) {
+     event.preventDefault();
 
-        let userId = document.getElementById("update-user-id-field").value;
+     let userId = document.getElementById("update-user-id-field").value;
+     let username = document.getElementById("update-username-field").value;
+     let email = document.getElementById("update-email-field").value;
+     let password = document.getElementById("update-password-field").value;
 
-        await this.client.updateUser(userId, this.errorHandler);
+     let updatedUserInfo = {
+       username: username,
+       email: email,
+       password: password,
+     };
 
-    }
+     let result = await this.client.updateUser(userId, updatedUserInfo);
+
+     if (result) {
+       this.showMessage("User updated successfully");
+     } else {
+       this.errorHandler("Error updating user");
+     }
+   }
+
 
     async onDelete(event) {
         event.preventDefault();

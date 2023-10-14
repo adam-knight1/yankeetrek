@@ -34,15 +34,16 @@ export default class UserClient {
         }
     }
 
-    async updateUser(userId) {
+    async updateUser(userId, updatedInfo) {
         try {
-            const response = await this.client.put(`/user/${userId}`);
+            const response = await this.client.put(`/user/${userId}`, updatedInfo);
             return response.data;
         } catch (error) {
             console.error("Failed to update user:", error);
             throw error;
         }
     }
+
 
    async deleteUser(userId) {
        try {
