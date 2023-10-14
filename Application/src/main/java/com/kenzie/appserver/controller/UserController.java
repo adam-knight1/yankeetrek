@@ -50,10 +50,13 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId) {
-        Optional<User> optionalUpdatedUser = userService.updateUser(userService.findByUserId(userId));
-        return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user))).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
+        Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
+        return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable String userId) {

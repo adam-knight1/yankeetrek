@@ -22,7 +22,8 @@ class UserPage extends BaseClass {
 
     async renderUser() {
 
-    }
+        }
+
 
     async onCreate(event) {
         event.preventDefault();
@@ -45,14 +46,29 @@ class UserPage extends BaseClass {
     }
 
 
-    async onUpdate(event) {
-        event.preventDefault();
+   async onUpdate(event) {
+     event.preventDefault();
 
-        let userId = document.getElementById("update-user-id-field").value;
+     let userId = document.getElementById("update-user-id-field").value;
+     let username = document.getElementById("update-username-field").value;
+     let email = document.getElementById("update-email-field").value;
+     let password = document.getElementById("update-password-field").value;
 
-        await this.client.updateUser(userId, this.errorHandler);
+     let updatedUserInfo = {
+       username: username,
+       email: email,
+       password: password,
+     };
 
-    }
+     let result = await this.client.updateUser(userId, updatedUserInfo);
+
+     if (result) {
+       this.showMessage("User updated successfully");
+     } else {
+       this.errorHandler("Error updating user");
+     }
+   }
+
 
     async onDelete(event) {
         event.preventDefault();
@@ -60,25 +76,45 @@ class UserPage extends BaseClass {
         let userId = document.getElementById("delete-user-record-field").value;
         console.log("Searching for userId:", userId);
 
-        await this.client.deleteUser(userId, this.errorHandler);
-                //update the ui here - adam
 
+    try {
+        await this.client.deleteUser(userId, this.errorHandler);
+        this.showMessage(`User with ID ${userId} deleted successfully!`);
+
+        this.dataStore.set("user", null);
+
+    } catch (error) {
+        this.showMessage("Failed to delete user.");
     }
+}
+
+
 
     async onFind(event) {
         event.preventDefault();
-
         let userId = document.getElementById("find-user-id-field").value;
-        console.log(`Fetching user with ID: ${userId}`);
-
-        const foundUser = await this.client.getUser(userId, this.errorHandler);
-        console.log(`Fetching user with ID: ${userId}`);
-
-        this.dataStore.set("user", foundUser);
-
-
+        try {
+            const foundUser = await this.client.getUser(userId, this.errorHandler);
+            if (foundUser) {
+                this.displayUserDetails(foundUser);
+            } else {
+                this.showMessage("User not found");
+            }
+        } catch (error) {
+            this.errorHandler("An error occurred while fetching the user");
+        }
     }
+
+
+displayUserDetails(user) {
+    const userDetails = document.getElementById("user-details");
+    userDetails.innerHTML = `
+        <p><strong>Username:</strong> ${user.username}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+    `;
 }
+}
+
 
 const main = async () => {
     const userPage = new UserPage();

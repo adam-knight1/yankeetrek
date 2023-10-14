@@ -18,11 +18,25 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+/*    public User findUserByUserId(String userId) {
+        System.out.println("Searching for userId: " + userId);
+        User user = userRepository
+                .findById(userId)
+                .map(u -> new User(u.getUserId())
+
+        if (user == null) {
+            System.out.println("User with userId: " + userId + " not found.");
+        } else {
+            System.out.println("User found: " + user);
+        }
+        return user;
+    }*/
+
     public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
         User user = userRepository
                 .findById(userId)
-                .map(u -> new User(u.getUsername(), u.getPassword(), u.getEmail()))
+                .map(u -> new User(u.getUserId(),u.getUsername(), u.getPassword(), u.getEmail()))
                 .orElse(null);
         if (user == null) {
             System.out.println("User with userId: " + userId + " not found.");
@@ -55,16 +69,16 @@ public class UserService {
         }
     }
 
-    public Optional<User> updateUser(User user) {
-        Optional<UserRecord> optionalExistingUser = userRepository.findById(user.getUserId());
+    public Optional<User> updateUser(String userId, User updatedUserInfo) {
+        Optional<UserRecord> optionalExistingUser = userRepository.findById(userId);
 
         if (optionalExistingUser.isPresent()) {
             UserRecord existingUser = optionalExistingUser.get();
 
-            existingUser.setUserId(user.getUserId());
-            existingUser.setEmail(user.getEmail());
-            existingUser.setPassword(user.getPassword());
-            existingUser.setUsername(user.getUsername());
+            // Update the existingUser with updatedUserInfo here
+            existingUser.setEmail(updatedUserInfo.getEmail());
+            existingUser.setPassword(updatedUserInfo.getPassword());
+            existingUser.setUsername(updatedUserInfo.getUsername());
 
             userRepository.save(existingUser);
 
@@ -73,19 +87,22 @@ public class UserService {
         return Optional.empty();
     }
 
+
+
+
+
     public boolean deleteUser(String userId) {
-        try {
-            Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
-            if (optionalUserRecord.isPresent()) {
-                userRepository.delete(optionalUserRecord.get());
-                return true;
-            }
-            return false;
-        } catch (NullPointerException e) {
-            System.out.println("Unable to delete user: " + e.getMessage());
+        Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
+
+        if (optionalUserRecord.isPresent()) {
+            userRepository.delete(optionalUserRecord.get());
+            return true;
+        } else {
+            System.out.println("User not found for deletion.");
             return false;
         }
     }
+
 
 
     public User transformToUser(UserRecord userRecord) {
