@@ -13,6 +13,8 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -31,6 +33,8 @@ public class UserService {
         }
         return user;
     }*/
+
+
 
     public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
