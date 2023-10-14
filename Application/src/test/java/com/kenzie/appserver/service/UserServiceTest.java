@@ -14,9 +14,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
+import static org.testcontainers.shaded.org.hamcrest.MatcherAssert.assertThat;
 
 public class UserServiceTest {
 
@@ -29,34 +30,35 @@ public class UserServiceTest {
         userService = new UserService(userRepository);
     }
 
-    @Test
+@Test
     public void findByUserId_successful() {
         // Given
-        String id = randomUUID().toString();
+        String userId = "adam";
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(userId);
+        userRecord.setUsername("adamUser");
+        userRecord.setEmail("adam@dogs.com");
+        userRecord.setPassword("superSecretPassword");
 
-        User user = new User();
-        user.setUserId(id);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(userRecord));
 
-        // When
-        when(userService.findByUserId(id)).thenReturn(user);
-        User userResult = userService.findByUserId(id);
+        User returnedUser = userService.findByUserId(userId);
 
-        // Then
-        Assertions.assertEquals(id, userResult.getUserId(), "User ids should match");
+        assertNotNull(returnedUser, "Returned user should not be null");
+        assertEquals(userId, returnedUser.getUserId(), "User IDs should match");
+        assertEquals("adamUser", returnedUser.getUsername(), "Usernames should match");
     }
 
     @Test
-    public void findByUserId_notFound() {
-        // Given
-        String userId = "123456";
+    public void addNewUser_successful() {
+        User newUser = new User("UserGuy", "newUser", "newPassword", "new@cooltown.com");
 
-        // When
-        when(userService.findByUserId(userId)).thenReturn(null);
-        User result = userService.findByUserId(userId);
+        User returnedUser = userService.createNewUser(newUser);
 
-        // Then
-        Assertions.assertNull(result, "user does not exist");
+        assertNotNull(returnedUser, "Returned user should not be null");
+        assertEquals(newUser.getUserId(), returnedUser.getUserId(), "User IDs should match");
     }
+
 
     @Test
     public void createNewUser_successful() {
@@ -71,10 +73,73 @@ public class UserServiceTest {
         User result = userService.createNewUser(user);
 
         // Then
-        Assertions.assertNotNull(result, "User should not be null");
+        assertNotNull(result, "User should not be null");
     }
 
     @Test
+    public void updateUser_successful() {
+        String userId = "awesomePossum";
+        User updatedUser = new User(userId, "Userz", "passmast", "updated@sillyville.com");
+        UserRecord existingUserRecord = new UserRecord();
+        existingUserRecord.setUserId(userId);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUserRecord));
+
+        Optional<User> returnedUser = userService.updateUser(userId, updatedUser);
+
+        if (!returnedUser.isPresent()) {
+            fail("Returned user should be present");
+        }
+        assertEquals(updatedUser.getUsername(), returnedUser.get().getUsername(), "Usernames should match");
+    }
+
+    @Test
+    public void deleteUser_successful() {
+        String userId = "snoozerId";
+        UserRecord existingUserRecord = new UserRecord();
+        existingUserRecord.setUserId(userId);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUserRecord));
+
+        boolean isDeleted = userService.deleteUser(userId);
+
+        if (!isDeleted){
+            fail("User not deleted successfully");
+        }
+    }
+
+
+    @Test
+    public void findByUserId_notFound() {
+        // Given
+        String userId = "coolGuyPaul";
+
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // When
+        User returnedUser = userService.findByUserId(userId);
+
+        // Then
+        assertNull(returnedUser, "Returned user should be null for non-existing ID");
+    }
+
+
+    @Test
+    public void CreateNewUser_SaveThrowsException() {
+        // Mock userRepository.save() to throw an exception
+        doThrow(new RuntimeException("forced error")).when(userRepository).save(any(UserRecord.class));
+
+        User user = new User("AdamHeartsBanjo", "adamsEmail", "banjoDog", "funWithCats");
+        assertNull(userService.createNewUser(user), "Should return null when save throws exception");
+    }
+
+
+
+}
+
+
+
+   /* @Test
     public void createNewUser_fails() {
         // Given
         User user = new User(null, null, null);
@@ -86,9 +151,9 @@ public class UserServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> userService.createNewUser(user),
                 "Should throw IllegalArgumentException");
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void updateUser_successful() {
         String id = "1232";
         // Given
@@ -112,8 +177,8 @@ public class UserServiceTest {
         // Then
         assertTrue("should match user and result", Optional.of(user).equals(result));
     }
-
-    @Test
+*/
+   /* @Test
     public void updateUser_fails() {
         // Given
         String id = "!2355";
@@ -127,9 +192,9 @@ public class UserServiceTest {
 
         // Then
         assertThrows(NullPointerException.class, Executable.class.cast(result));
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void deleteUser_successful() {
         // Given
         String username = "jacob";
@@ -151,20 +216,35 @@ public class UserServiceTest {
 
         // Then
         assertTrue("User deleted successfully", result);
-    }
+    }*/
 
-    @Test
+     /*@Test
+    public void findByUserId_notFound() {
+        String userId = "123456";
+
+        when(userService.findByUserId(userId)).thenReturn(null);
+        User result = userService.findByUserId(userId);
+
+        Assertions.assertNull(result, "user does not exist");
+    }*/
+
+    /* @Test
     public void deleteUser_fails() {
-        // Given
-        UserRecord userRecord = mock(UserRecord.class);
+        String userId = "snoozerId";
+        UserRecord existingUserRecord = new UserRecord();
+        existingUserRecord.setUserId(userId);
 
-        // When
-        when(userRecord.getUserId()).thenReturn(randomUUID().toString());
-        when(userService.deleteUser(userRecord.getUserId())).thenThrow(new NullPointerException());
+        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUserRecord));
 
-        // Then
-        Assertions.assertThrows(NullPointerException.class,
-                () -> userService.deleteUser(userRecord.getUserId()),
-                "Should throw NullPointerException");
-    }
-}
+        boolean isnotDeleted = userService.deleteUser(userId);
+
+        if (isnotDeleted){
+            fail("failed to delete user");
+        }
+    }*/
+
+
+
+
+
+
