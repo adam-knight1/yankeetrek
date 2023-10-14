@@ -42,11 +42,11 @@ public class ChatRoomResponse {
         this.timestamp = timestamp;
     }
 
-    public String getSentComment() {
-        return sentComment;
-    }
+  //  public String getSentComment() {
+  //      return sentComment;
+  //  }
 
-    public void setSentComment(Comment sentComment) {
-        this.sentComment = sentComment;
-    }
+  //  public void setSentComment(Comment sentComment) {
+  //      this.sentComment = sentComment;
+  //  }
 }

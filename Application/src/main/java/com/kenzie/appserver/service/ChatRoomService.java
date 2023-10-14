@@ -9,8 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
     public class ChatRoomService {
@@ -26,9 +29,6 @@ import java.util.List;
         this.chatRooms = new ArrayList<>();
     }
 
-    //Do you all think "sentComment" should be listed as Comment or String? -ALEXIS
-    //Still working on this constructor
-
     public ChatRoom sendComment(Comment sentComment, String ownerId ){
         Comment comment = commentService.addNewComment(sentComment);
         ChatRoomRecord chatRoomRecord = new ChatRoomRecord();
@@ -39,23 +39,26 @@ import java.util.List;
         chatRoomRecord.setTimeStamp(chatRoomRecord.getTimeStamp());
         chatRoomRepository.save(chatRoomRecord);
 
+
         return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(),
                 chatRoomRecord.getComment());
 
     }
-
-    public List<ChatRoom> findAll(){
-        List<ChatRoom> chatRooms = new ArrayList<>();
-        chatRoomRepository.findAll()
-                .forEach(chatRoomRecord -> chatRooms.add(new ChatRoom(chatRoomRecord.getOwnerId(),
-                        chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(), chatRoomRecord.getComment())));
-        return chatRooms;
-    }
-
     public ChatRoom createChatRoom(ChatRoom chatRoom) {
         chatRooms.add(chatRoom);
         return chatRoom;
     }
+
+    //tests work
+    public List<ChatRoom> findAll(){
+        List<ChatRoom> chatRooms = new ArrayList<>();
+        chatRoomRepository
+                .findAll()
+                .forEach(chatRoom -> chatRooms.add(new ChatRoom(chatRoom.getOwnerId(), chatRoom.getChatRoomId(),
+                        chatRoom.getTimeStamp(), chatRoom.getComment())));
+        return chatRooms;
+    }
+
 
     public ChatRoom getChatRoomById(String chatRoomId){
         for (ChatRoom chatRoom : chatRooms){
