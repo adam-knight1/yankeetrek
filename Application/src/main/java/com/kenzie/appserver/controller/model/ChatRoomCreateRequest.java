@@ -17,7 +17,7 @@ public class ChatRoomCreateRequest {
     private String timeStamp;
 
     @JsonProperty("sentComment")
-    private Comment sentComment;
+    private String sentComment;
 
     public String getOwnerId() {
         return ownerId;
@@ -43,11 +43,11 @@ public class ChatRoomCreateRequest {
         this.timeStamp = timeStamp;
     }
 
-    public Comment getSentComment() {
+    public String getSentComment() {
         return sentComment;
     }
 
-    public void setSentComment(Comment sentComment) {
+    public void setSentComment(String sentComment) {
         this.sentComment = sentComment;
     }
 }

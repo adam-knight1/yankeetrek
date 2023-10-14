@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenzie.appserver.service.model.Comment;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatRoomResponse {
@@ -41,11 +42,11 @@ public class ChatRoomResponse {
         this.timestamp = timestamp;
     }
 
-    public String getSentComment() {
-        return sentComment;
-    }
+  //  public String getSentComment() {
+  //      return sentComment;
+  //  }
 
-    public void setSentComment(String sentComment) {
-        this.sentComment = sentComment;
-    }
+  //  public void setSentComment(Comment sentComment) {
+  //      this.sentComment = sentComment;
+  //  }
 }

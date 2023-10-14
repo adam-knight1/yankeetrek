@@ -27,7 +27,7 @@ public class ChatRoomRecord {
     private String chatRoomId;
 
     @DynamoDBAttribute
-    private Long timeStamp;
+    private String timeStamp;
 
     public String getOwnerId() {
         return ownerId;
@@ -61,11 +61,11 @@ public class ChatRoomRecord {
         this.chatRoomId = chatRoomId;
     }
 
-    public Long getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Long timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
 
