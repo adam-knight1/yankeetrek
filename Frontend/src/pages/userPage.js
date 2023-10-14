@@ -68,8 +68,11 @@ class UserPage extends BaseClass {
         event.preventDefault();
 
         let userId = document.getElementById("find-user-id-field").value;
+        console.log(`Fetching user with ID: ${userId}`);
 
         const foundUser = await this.client.getUser(userId, this.errorHandler);
+        console.log(`Fetching user with ID: ${userId}`);
+
         this.dataStore.set("user", foundUser);
 
 

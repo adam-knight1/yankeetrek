@@ -1,5 +1,6 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.UserNotFoundException;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
@@ -26,10 +27,11 @@ public class UserController {
     public ResponseEntity<UserResponse> getUser(@PathVariable("userId") String userId) {
         User user = userService.findByUserId(userId);
         if (user == null) {
-            return ResponseEntity.notFound().build();
+            throw new UserNotFoundException("User not found"); // added this custom exception -adam
         }
         return ResponseEntity.ok(userToResponse(user));
     }
+
 
     @PostMapping
     public ResponseEntity<UserResponse> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {

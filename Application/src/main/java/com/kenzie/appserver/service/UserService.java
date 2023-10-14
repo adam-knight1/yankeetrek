@@ -17,10 +17,24 @@ public class UserService {
     public UserService(UserRepository userRepository) {this.userRepository = userRepository;}
 
     public User findByUserId(String userId) {
+        Optional<UserRecord> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            UserRecord user = optionalUser.get();
+            System.out.println("User ID: " + user.getUserId());
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("Password: " + user.getPassword());
+            System.out.println("Email: " + user.getEmail());
+        } else {
+            System.out.println("User not found");
+        }
+
         return userRepository
                 .findById(userId)
                 .map(user -> new User(user.getUsername(), user.getPassword(), user.getEmail()))
                 .orElse(null);
+
+
+
     }
 
     public User createNewUser(User user) {
@@ -37,7 +51,7 @@ public class UserService {
             try {
                 userRepository.save(userRecord);
                 return user;
-                } catch (IllegalArgumentException e) {
+                } catch (Exception e) {
                 System.out.println("unable to save user" + e.getMessage());
                 return null;
             }
