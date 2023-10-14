@@ -22,7 +22,8 @@ class UserPage extends BaseClass {
 
     async renderUser() {
 
-    }
+        }
+
 
     async onCreate(event) {
         event.preventDefault();
