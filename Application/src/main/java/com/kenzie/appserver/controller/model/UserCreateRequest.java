@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 public class UserCreateRequest {
-
     @NotEmpty
     @JsonProperty("username")
     private String username;

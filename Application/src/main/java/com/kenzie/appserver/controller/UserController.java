@@ -16,7 +16,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -25,6 +24,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("userId") String userId) {
+        System.out.println("Received request to find user with userId: " + userId);
         User user = userService.findByUserId(userId);
         if (user == null) {
             throw new UserNotFoundException("User not found"); // added this custom exception -adam
@@ -43,7 +43,7 @@ public class UserController {
 
         try {
             userService.createNewUser(user);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return  ResponseEntity.ok(userToResponse(user));
@@ -63,8 +63,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
     private UserResponse userToResponse(User user) {
         UserResponse userResponse = new UserResponse();

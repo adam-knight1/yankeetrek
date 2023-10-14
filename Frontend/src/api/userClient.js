@@ -8,15 +8,19 @@ export default class UserClient {
         });
     }
 
-    async getUser(userId) {
-        try {
-            const response = await this.client.get(`/user/${userId}`);
-            return response.data;
-        } catch (error) {
-            console.error("Failed to get user:", error);
-            throw error;
-        }
-    }
+   async getUser(userId) {
+       try {
+           console.log("Making request to get user with userId:", userId);
+           const response = await this.client.get(`/user/${userId}`);
+           console.log("Received response:", response.data);
+           return response.data;
+       } catch (error) {
+           console.error("Failed to get user:", error);
+           throw error;
+
+   }
+
+
 
     async createUser(username, password, email) {
         try {

@@ -58,6 +58,7 @@ class UserPage extends BaseClass {
         event.preventDefault();
 
         let userId = document.getElementById("delete-user-record-field").value;
+        console.log("Searching for userId:", userId);
 
         await this.client.deleteUser(userId, this.errorHandler);
                 //update the ui here - adam
