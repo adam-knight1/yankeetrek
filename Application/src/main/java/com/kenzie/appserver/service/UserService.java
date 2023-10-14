@@ -88,18 +88,17 @@ public class UserService {
     }
 
     public boolean deleteUser(String userId) {
-        try {
-            Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
-            if (optionalUserRecord.isPresent()) {
-                userRepository.delete(optionalUserRecord.get());
-                return true;
-            }
-            return false;
-        } catch (NullPointerException e) {
-            System.out.println("Unable to delete user: " + e.getMessage());
+        Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
+
+        if (optionalUserRecord.isPresent()) {
+            userRepository.delete(optionalUserRecord.get());
+            return true;
+        } else {
+            System.out.println("User not found for deletion.");
             return false;
         }
     }
+
 
 
     public User transformToUser(UserRecord userRecord) {

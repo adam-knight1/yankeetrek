@@ -60,10 +60,19 @@ class UserPage extends BaseClass {
         let userId = document.getElementById("delete-user-record-field").value;
         console.log("Searching for userId:", userId);
 
-        await this.client.deleteUser(userId, this.errorHandler);
-                //update the ui here - adam
 
+    try {
+        await this.client.deleteUser(userId, this.errorHandler);
+        this.showMessage(`User with ID ${userId} deleted successfully!`);
+
+        this.dataStore.set("user", null);
+
+    } catch (error) {
+        this.showMessage("Failed to delete user.");
     }
+}
+
+
 
     async onFind(event) {
         event.preventDefault();
