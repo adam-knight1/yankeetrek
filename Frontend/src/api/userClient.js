@@ -17,7 +17,7 @@ export default class UserClient {
        } catch (error) {
            console.error("Failed to get user:", error);
            throw error;
-       }
+
    }
 
 
