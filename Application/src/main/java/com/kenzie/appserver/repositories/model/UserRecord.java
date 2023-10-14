@@ -23,9 +23,6 @@ public class UserRecord {
     @DynamoDBAttribute(attributeName = "password")
     private String password;
 
-    @DynamoDBAttribute(attributeName = "hobbies")
-    private ArrayList<String> hobbies;
-
     public String getUserId() { return userId; }
 
     public void setUserId(String userId) { this.userId = userId; }
@@ -46,14 +43,6 @@ public class UserRecord {
         this.password = password;
     }
 
-    public ArrayList<String> getHobbies() {
-        return hobbies;
-    }
-
-    public void setHobbies(ArrayList<String> hobbies) {
-        this.hobbies = hobbies;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -67,11 +56,11 @@ public class UserRecord {
         if (this == o) return true;
         if (!(o instanceof UserRecord)) return false;
         UserRecord that = (UserRecord) o;
-        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getHobbies(), that.getHobbies());
+        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getPassword(), that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getUsername(), getPassword(), getHobbies());
+        return Objects.hash(getUserId(), getUsername(), getPassword());
     }
 }
