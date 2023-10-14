@@ -14,27 +14,22 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {this.userRepository = userRepository;}
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User findByUserId(String userId) {
-        Optional<UserRecord> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            UserRecord user = optionalUser.get();
-            System.out.println("User ID: " + user.getUserId());
-            System.out.println("Username: " + user.getUsername());
-            System.out.println("Password: " + user.getPassword());
-            System.out.println("Email: " + user.getEmail());
-        } else {
-            System.out.println("User not found");
-        }
-
-        return userRepository
+        System.out.println("Searching for userId: " + userId);
+        User user = userRepository
                 .findById(userId)
-                .map(user -> new User(user.getUsername(), user.getPassword(), user.getEmail()))
+                .map(u -> new User(u.getUsername(), u.getPassword(), u.getEmail()))
                 .orElse(null);
-
-
-
+        if (user == null) {
+            System.out.println("User with userId: " + userId + " not found.");
+        } else {
+            System.out.println("User found: " + user);
+        }
+        return user;
     }
 
     public User createNewUser(User user) {
