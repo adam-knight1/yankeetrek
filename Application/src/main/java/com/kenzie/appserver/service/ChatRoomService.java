@@ -2,30 +2,27 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChatRoomRepository;
 import com.kenzie.appserver.repositories.model.ChatRoomRecord;
-import com.kenzie.appserver.repositories.model.CommentRecord;
 import com.kenzie.appserver.service.model.ChatRoom;
 import com.kenzie.appserver.service.model.Comment;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
     public class ChatRoomService {
-    private ChatRoomRepository chatRoomRepository;
-    private CommentService commentService;
-    private List<ChatRoom> chatRooms;
-    private UserService userService;
 
-    public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService, UserService userService ){
+    private final ChatRoomRepository chatRoomRepository;
+    private final CommentService commentService;
+    private final List<ChatRoom> chatRooms;
+    //private  UserService userService;
+    @Autowired
+    public ChatRoomService (ChatRoomRepository chatRoomRepository, CommentService commentService ){
         this.chatRoomRepository = chatRoomRepository;
         this.commentService = commentService;
-        this.userService = userService;
+       // this.userService = userService;
         this.chatRooms = new ArrayList<>();
     }
 
