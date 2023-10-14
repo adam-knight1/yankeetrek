@@ -30,6 +30,7 @@ public class CommentService {
                 .findById(id)
                 .map(comment -> new Comment(comment.getCommentId(), comment.getOwnerId(), comment.getTitle(), comment.getContent(), comment.getChatRoomId()))
                 .orElse(null);
+
         return commentFromBackend;
     }
 

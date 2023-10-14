@@ -10,9 +10,9 @@ public class User {
     String password;
     String email;
 
-    public User() {
+   /* public User() {
         this.userId = UUID.randomUUID().toString();
-    }
+    }*/
 
     public User(String username, String password, String email) {
         this.userId = UUID.randomUUID().toString();
