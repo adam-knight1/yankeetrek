@@ -92,18 +92,29 @@ class UserPage extends BaseClass {
 
     async onFind(event) {
         event.preventDefault();
-
         let userId = document.getElementById("find-user-id-field").value;
-        console.log(`Fetching user with ID: ${userId}`);
-
-        const foundUser = await this.client.getUser(userId, this.errorHandler);
-        console.log(`Fetching user with ID: ${userId}`);
-
-        this.dataStore.set("user", foundUser);
-
-
+        try {
+            const foundUser = await this.client.getUser(userId, this.errorHandler);
+            if (foundUser) {
+                this.displayUserDetails(foundUser);
+            } else {
+                this.showMessage("User not found");
+            }
+        } catch (error) {
+            this.errorHandler("An error occurred while fetching the user");
+        }
     }
+
+
+displayUserDetails(user) {
+    const userDetails = document.getElementById("user-details");
+    userDetails.innerHTML = `
+        <p><strong>Username:</strong> ${user.username}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+    `;
 }
+}
+
 
 const main = async () => {
     const userPage = new UserPage();
