@@ -25,8 +25,8 @@ public class UserServiceTest {
 
     @BeforeEach
     void setup() {
-        userService = mock(UserService.class);
         userRepository = mock(UserRepository.class);
+        userService = new UserService(userRepository);
     }
 
     @Test
