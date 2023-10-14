@@ -17,8 +17,6 @@
 <div class="welcome-section">
   <p>Here you can create, update, or delete your user profile.</p>
 </div>
-<body>
-
 
 <div class="card" id="create-user-form">
   <h2>Create New User</h2>
@@ -29,15 +27,18 @@
     </p>
     <p class="form-field">
       <label>Email</label>
-      <input type="text" required class="validated-field" id="email-field">
+      <input type="email" required class="validated-field" id="email-field">
     </p>
     <p class="form-field">
       <label>Password</label>
-      <input type="text" required class="validated-field" id="password-field">
+      <input type="password" required class="validated-field" id="password-field">
     </p>
     <button type="submit">Create</button>
+    <div id="created-user-id"></div>
+    <div id="keep-it-safe"></div>
   </form>
 </div>
+
 <div class="card" id="find-user-form">
   <h2>Find User</h2>
   <form class="card-content" id="find-user">
