@@ -1,14 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
-/**
- * Client to call the MusicPlaylistService.
- *
- * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
- * which we could avoid using inheritance or Mixins.
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
- * https://javascript.info/mixins
- */
+
 export default class ChatRoomClient extends BaseClass {
 
     constructor(props = {}){
@@ -42,6 +35,16 @@ export default class ChatRoomClient extends BaseClass {
         } catch (error) {
         }
     }
+
+       async function findAllChatRooms() {
+          try {
+            const response = await axios.get(apiUrl);
+            return response.data; // Assuming the API returns a JSON array of chat rooms
+          } catch (error) {
+            console.error('Error fetching chat rooms:', error);
+            throw error;
+          }
+        }
 
     async sendMessage(message, chatRoomId, errorCallback) {
         try {
