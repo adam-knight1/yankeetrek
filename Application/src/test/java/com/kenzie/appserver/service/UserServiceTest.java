@@ -25,8 +25,8 @@ public class UserServiceTest {
 
     @BeforeEach
     void setup() {
-        userService = mock(UserService.class);
         userRepository = mock(UserRepository.class);
+        userService = new UserService(userRepository);
     }
 
     @Test
@@ -90,6 +90,7 @@ public class UserServiceTest {
 
     @Test
     public void updateUser_successful() {
+        String id = "1232";
         // Given
         String username = "brandis";
         String password = "cat";
@@ -105,8 +106,8 @@ public class UserServiceTest {
         userRepository.save(userRecord);
 
         // When
-        when(userService.updateUser(user)).thenReturn(Optional.of(user));
-        Optional<User> result = userService.updateUser(user);
+        when(userService.updateUser(id, user)).thenReturn(Optional.of(user));
+        Optional<User> result = userService.updateUser(id, user);
 
         // Then
         assertTrue("should match user and result", Optional.of(user).equals(result));
@@ -115,13 +116,14 @@ public class UserServiceTest {
     @Test
     public void updateUser_fails() {
         // Given
+        String id = "!2355";
         String username = "maya";
         String password = "dog";
         String email = "maya@gmail.com";
         User user = new User(username, password, email);
 
         // When
-        Optional<User> result = userService.updateUser(user);
+        Optional<User> result = userService.updateUser(id,user);
 
         // Then
         assertThrows(NullPointerException.class, Executable.class.cast(result));

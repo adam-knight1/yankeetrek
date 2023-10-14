@@ -19,10 +19,12 @@ import static org.mockito.Mockito.when;
 public class CommentServiceTest {
 
     private CommentService commentService;
+    private CommentRepository commentRepository;
 
     @BeforeEach
     void setup() {
-        commentService = mock(CommentService.class);
+        commentRepository = mock(CommentRepository.class);
+        commentService = new CommentService(commentRepository);
     }
 
     @Test
@@ -37,11 +39,10 @@ public class CommentServiceTest {
         comment.setCommentId(id);
 
         // When
-        when(commentService.findById(id)).thenReturn(comment);
-        Comment result = commentService.findById(id);
+        when(commentRepository.findById(id)).thenReturn(java.util.Optional.of(commentRecord));
 
         // Then
-        Assertions.assertEquals(id, result.getCommentId(), "Comment ids should match");
+        Assertions.assertEquals(id, commentService.findById(id).getCommentId(), "Comment ids should match");
     }
 
     @Test
@@ -50,7 +51,7 @@ public class CommentServiceTest {
         String id = "123456";
 
         // When
-        when(commentService.findById(id)).thenReturn(null);
+        when(commentRepository.findById(id)).thenReturn(null);
         Comment result = commentService.findById(id);
 
         // Then
@@ -71,7 +72,7 @@ public class CommentServiceTest {
         commentList.add(comment2);
 
         // When
-        when(commentService.findAll()).thenReturn(commentList);
+        when(commentRepository.findAll()).thenReturn(commentList);
         List<Comment> results = commentService.findAll();
 
         // Then
@@ -108,14 +109,13 @@ public class CommentServiceTest {
     public void addNewComment_Null_ThrowsException()  {
         // Given
         Comment comment = new Comment();
+        CommentRecord commentRecord = new CommentRecord();
 
         // When
-        when(commentService.addNewComment(comment)).thenThrow(new IllegalArgumentException());
+        when(commentRepository.save(commentRecord)).thenReturn(null);
 
         // Then
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> commentService.addNewComment(comment),
-                "Should throw IllegalArgumentException");
+        Assertions.assertNull(commentService.addNewComment(comment));
     }
 
     @Test
