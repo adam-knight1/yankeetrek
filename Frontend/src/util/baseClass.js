@@ -6,11 +6,18 @@ export default class BaseClass {
      * @param methods The name of each method to bind.
      * @param classInstance The instance of the class to bind the methods to.
      */
-    bindClassMethods(methods, classInstance) {
+  /*  bindClassMethods(methods, classInstance) {
         methods.forEach(method => {
             classInstance[method] = classInstance[method].bind(classInstance);
         });
-    }
+    }*/
+     bindClassMethods(methods, classInstance) {
+            methods.forEach(method => {
+                if (typeof classInstance[method] === 'function') {
+                    classInstance[method] = classInstance[method].bind(classInstance);
+                }
+            });
+        }
 
     formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('en-US', {

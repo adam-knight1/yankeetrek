@@ -37,13 +37,13 @@ import java.util.List;
         chatRoomRepository.save(chatRoomRecord);
 
 
-        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId(), chatRoomRecord.getTimeStamp(),
-                chatRoomRecord.getComment());
+        return new ChatRoom(chatRoomRecord.getOwnerId(), chatRoomRecord.getChatRoomId());
 
     }
     public ChatRoom createChatRoom(ChatRoom chatRoom) {
-        chatRooms.add(chatRoom);
-        return chatRoom;
+        ChatRoom chatRoom1 = new ChatRoom(chatRoom.getOwnerId(), chatRoom.getChatRoomId());
+        chatRooms.add(chatRoom1);
+        return chatRoom1;
     }
 
     //tests work
@@ -51,8 +51,7 @@ import java.util.List;
         List<ChatRoom> chatRooms = new ArrayList<>();
         chatRoomRepository
                 .findAll()
-                .forEach(chatRoom -> chatRooms.add(new ChatRoom(chatRoom.getOwnerId(), chatRoom.getChatRoomId(),
-                        chatRoom.getTimeStamp(), chatRoom.getComment())));
+                .forEach(chatRoom -> chatRooms.add(new ChatRoom(chatRoom.getOwnerId(), chatRoom.getChatRoomId())));
         return chatRooms;
     }
 
