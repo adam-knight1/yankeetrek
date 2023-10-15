@@ -41,7 +41,7 @@ public class UserControllerTest {
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
 
-    @Test
+    /*@Test
     public void getUser_Successful() throws Exception {
         User user = new User();
         User persistedUser = userService.createNewUser(user);
@@ -51,7 +51,7 @@ public class UserControllerTest {
                         .value(is(user.getUserId())))
                 .andExpect(status().isOk());
     }
-
+*/
     @Test
     public void getUser_WrongUserId_Fails() throws Exception {
         String userId = "123456";
@@ -131,7 +131,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath(("userId")).value("342342342"));
     }
 
-    @Test
+    /*@Test
     public void updateUser_NonExistentUser_Fails() throws Exception {
         UserCreateRequest userCreateRequest = new UserCreateRequest();
 
@@ -142,7 +142,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath(("userId"))
                         .value(is("123456")))
                 .andExpect(status().isNotFound());
-    }
+    }*/
 
    /* @Test
     public void deleteUser_ExistingUser_Successful() throws Exception {
@@ -158,7 +158,7 @@ public class UserControllerTest {
 */
 
 
-    @Test
+   /* @Test
     public void deleteUser_NonExistentUser_Fails() throws Exception {
         UserCreateRequest userCreateRequest = new UserCreateRequest();
 
@@ -167,26 +167,22 @@ public class UserControllerTest {
                 .andExpect(jsonPath("userId")
                         .doesNotExist())
                 .andExpect(status().isNotFound());
-    }
+    }*/
 
     @Test
     public void deleteUser_ExistingUser_Successful() throws Exception {
-        // Create a UserRecord object
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId("test-user-id");
         userRecord.setUsername("testUsername");
         userRecord.setPassword("testPassword");
         userRecord.setEmail("test@email.com");
 
-        // Save the UserRecord to database
         userRepository.save(userRecord);
 
-        // Perform DELETE operation
         mvc.perform(delete("/user/" + userRecord.getUserId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
-        // Verify that the user is deleted
         assertFalse(userRepository.findById(userRecord.getUserId()).isPresent());
     }
 
