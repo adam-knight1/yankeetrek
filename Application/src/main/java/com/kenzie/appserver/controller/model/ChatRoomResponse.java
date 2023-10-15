@@ -12,11 +12,11 @@ public class ChatRoomResponse {
     @JsonProperty("chatRoomId")
     private String chatRoomId;
 
-    @JsonProperty("timeStamp")
-    private String timestamp;
-
-    @JsonProperty("sentComment")
-    private String sentComment;
+//    @JsonProperty("timeStamp")
+//    private String timestamp;
+//
+//    @JsonProperty("sentComment")
+//    private String sentComment;
 
     public String getOwnerId() {
         return ownerId;
@@ -34,19 +34,19 @@ public class ChatRoomResponse {
         this.chatRoomId = chatRoomId;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-  //  public String getSentComment() {
-  //      return sentComment;
-  //  }
-
-  //  public void setSentComment(Comment sentComment) {
-  //      this.sentComment = sentComment;
-  //  }
+//    public String getTimestamp() {
+//        return timestamp;
+//    }
+//
+//    public void setTimestamp(String timestamp) {
+//        this.timestamp = timestamp;
+//    }
+//
+//  //  public String getSentComment() {
+//  //      return sentComment;
+//  //  }
+//
+//  //  public void setSentComment(Comment sentComment) {
+//  //      this.sentComment = sentComment;
+//  //  }
 }

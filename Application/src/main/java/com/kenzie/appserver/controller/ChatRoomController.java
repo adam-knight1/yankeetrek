@@ -30,7 +30,7 @@ public class ChatRoomController {
         this.commentService = commentService;
     }
 
-   @PostMapping("/chatrooms/{chatRoomId}/comments")
+   @PostMapping("/chatroom/{chatRoomId}/comments")
     public ResponseEntity<String> sendComment(
             @PathVariable String chatRoomId, @RequestBody CommentCreateRequest commentCreateRequest){
        Comment comment = new Comment(
@@ -56,13 +56,11 @@ public class ChatRoomController {
     }*/
 
   //this is option 2
-    @PostMapping("/chatrooms")
-    public ResponseEntity<ChatRoomResponse> createChatRoom2(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
+    @PostMapping("/chatroom")
+    public ResponseEntity<ChatRoomResponse> createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest){
         ChatRoom chatRoom = new ChatRoom(
                 chatRoomCreateRequest.getOwnerId(),
-                chatRoomCreateRequest.getChatRoomId(),
-                chatRoomCreateRequest.getTimeStamp(),
-                chatRoomCreateRequest.getSentComment()
+                chatRoomCreateRequest.getChatRoomId()
         );
         try {
             chatRoomService.createChatRoom(chatRoom);
@@ -87,7 +85,7 @@ public class ChatRoomController {
         }
     }*/
 
-    @GetMapping("/chatrooms/{chatRoomId}")
+    @GetMapping("/chatroom/{chatRoomId}")
     public ResponseEntity<ChatRoom> getChatRoomById(@PathVariable ("chatRoomId") String chatRoomId){
     ChatRoom chatRoom = chatRoomService.getChatRoomById(chatRoomId);
 
@@ -101,8 +99,6 @@ public class ChatRoomController {
 
     private ChatRoomResponse chatRoomResponse(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
-      //  chatRoomResponse.setSentComment(chatRoom.getSentComment()); having trouble getting this working
-        chatRoomResponse.setTimestamp(chatRoom.getTimeStamp());
         chatRoomResponse.setOwnerId(chatRoom.getOwnerId());
         chatRoomResponse.setChatRoomId(chatRoom.getChatRoomId());
         return chatRoomResponse;

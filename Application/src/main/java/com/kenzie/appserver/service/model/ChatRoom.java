@@ -4,14 +4,14 @@ public class ChatRoom {
     //added by adam
     private final String ownerId;
     private final String chatRoomId;
-    private final String timeStamp;
-    private final String sentComment;
+   // private final String timeStamp;
+   // private final String sentComment;
 
-    public ChatRoom(String ownerId, String chatRoomId, String timeStamp, String sentComment) {
+    public ChatRoom(String ownerId, String chatRoomId) {
         this.ownerId = ownerId;
         this.chatRoomId = chatRoomId;
-        this.timeStamp = timeStamp;
-        this.sentComment = sentComment;
+       // this.timeStamp = timeStamp;
+       // this.sentComment = sentComment;
 
     }
 
@@ -24,13 +24,13 @@ public class ChatRoom {
         return chatRoomId;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
-    }
-
-    public String getSentComment() {
-        return sentComment;
-    }
+//    public String getTimeStamp() {
+//        return timeStamp;
+//    }
+//
+//    public String getSentComment() {
+//        return sentComment;
+//    }
 
 
     public void addComment(Comment newComment) {

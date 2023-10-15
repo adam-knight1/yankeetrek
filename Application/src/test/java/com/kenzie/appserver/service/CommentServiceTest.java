@@ -72,7 +72,7 @@ public class CommentServiceTest {
         commentList.add(comment2);
 
         // When
-        when(commentRepository.findAll()).thenReturn(commentList);
+      //  when(commentRepository.findAll()).thenReturn(commentList);
         List<Comment> results = commentService.findAll();
 
         // Then

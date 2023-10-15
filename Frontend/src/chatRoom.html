@@ -1,64 +1,40 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <script type="text/javascript" src="chatRoomClient.js"></script>
+    <script type="text/javascript" src="chatRoomPage.js"></script>
+
+    <script type="text/javascript" src="commentPage.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
+<body>
 <header class="header" id="header">
 
     <div class="site-title">
         <h1>Message Board</h1>
-        <a class="header_home" href="index.html">Chatrooms</a>
     </div>
 </header>
-<button type="button" id="refresh" style="margin-left: 20px;margin-top: 20px;">Refresh</button>
+<div class="welcome-section">
+    <p>Create a new chat room!</p>
+</div>
 
-</p>
-</p>
-</p>
-</p>
-<div class="card">
-    <h2>Like-Minded User Menu</h2>
-    <div class="card-content">
-        <a href="chatRoom.html" class="chatroom-button">Chatrooms</a>
-        </p>
-        </p>
-        </p>
-        </p>
-    </div>
-<div class="card">
-    <h2>Post a Comment</h2>
-    <p>Are you looking to start a conversation? Please input your username and your favorite hobby!  </p>
-    <form class="chatRoom-content" id="create-chatroom-form">
+<div class="card" id="create-chatRoom-form">
+    <h2>Create New Chat Room</h2>
+    <form class="card-content" id="create-chatRoom">
         <p class="form-field">
-            <label>Username: </label>
-            <input type="text" required class="validated-field" id="username-field" placeholder="Input username..." autofocus>
+            <label>OwnerId: </label>
+            <input type="text" required class="validated-field" id="ownerId-field">
         </p>
         <p class="form-field">
-            <label>Favorite hobby: </label>
-            <input type="text" required class="validated-field" id="hobby-field" placeholder="Input hobby..." autofocus>
+            <label>ChatRoomId: </label>
+            <input type="text" required class="validated-field" id="chatRoomId-field">
         </p>
-        <p class="form-field">
-            <label>Age: </label>
-            <input type="text" required class="validated-field" id="age-field" placeholder="Input age..." autofocus>
-        </p>
-        <p class="form-field">
-            <label>Gender: </label>
-            <input type="text" required class="validated-field" id="gender-field" placeholder="Input gender..." autofocus>
-        </p>
-        <button type="submit">Send</button>
+        <button type="submit">Create</button>
     </form>
 </div>
-<div class="card state active" id="loading">
-    Loading...
-</div>
-    <div class="card" id="result">
-        <h2>Result:</h2>
-        <p id="result-info"></p>
 
-        <a href="javascript:history.back()" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Go Back</a>
+<a href="javascript:history.back()" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Go Back</a>
 
-</div>
-</div>
-
+</body>
 </html>

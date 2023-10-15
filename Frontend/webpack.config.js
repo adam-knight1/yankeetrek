@@ -11,6 +11,7 @@ module.exports = {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
     commentPage: path.resolve(__dirname, 'src', 'pages', 'commentPage.js'),
+    chatRoomPage: path.resolve(__dirname, 'src', 'pages', 'chatRoomPage.js'),
 
   },
   output: {
@@ -34,6 +35,7 @@ module.exports = {
             context: [
               '/example',
               '/user',
+              '/chatRoom',
             ],
             target: 'http://localhost:5001'
           }
