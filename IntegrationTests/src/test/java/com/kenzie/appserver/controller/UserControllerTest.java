@@ -3,6 +3,8 @@ package com.kenzie.appserver.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
+import com.kenzie.appserver.repositories.UserRepository;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import net.andreinc.mockneat.MockNeat;
@@ -12,7 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,11 +30,16 @@ public class UserControllerTest {
     private MockMvc mvc;
 
     @Autowired
+    private ObjectMapper mapper;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     UserService userService;
 
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
-    private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void getUser_Successful() throws Exception {
@@ -79,7 +91,7 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
+   /* @Test
     public void updateUser_Successful() throws Exception {
         String email = "random@email.com";
         User user = new User();
@@ -92,6 +104,31 @@ public class UserControllerTest {
                 .andExpect(jsonPath(("userId"))
                         .value(is(user.getUserId())))
                 .andExpect(status().isOk());
+    }
+*/
+
+    @Test
+    public void updateUser_Successful() throws Exception {
+        //passing now -adam
+        UserRecord existingUser = new UserRecord();
+        existingUser.setUsername("adam");
+        existingUser.setEmail("knight");
+        existingUser.setPassword("aknight");
+        existingUser.setUserId("342342342");
+        existingUser = userRepository.save(existingUser);
+
+        String existingUserId = existingUser.getUserId();
+
+        UserCreateRequest userUpdateRequest = new UserCreateRequest();
+        userUpdateRequest.setUsername("newAdam");
+        userUpdateRequest.setEmail("newKnight");
+        userUpdateRequest.setPassword("new");
+
+        mvc.perform(put("/user/" + existingUserId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(userUpdateRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(("userId")).value("342342342"));
     }
 
     @Test
@@ -107,7 +144,7 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
+   /* @Test
     public void deleteUser_ExistingUser_Successful() throws Exception {
         User user = new User();
         UserCreateRequest userCreateRequest = new UserCreateRequest();
@@ -118,6 +155,8 @@ public class UserControllerTest {
                         .value(is(user.getUserId())))
                 .andExpect(status().isNoContent());
     }
+*/
+
 
     @Test
     public void deleteUser_NonExistentUser_Fails() throws Exception {
@@ -129,4 +168,26 @@ public class UserControllerTest {
                         .doesNotExist())
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    public void deleteUser_ExistingUser_Successful() throws Exception {
+        // Create a UserRecord object
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId("test-user-id");
+        userRecord.setUsername("testUsername");
+        userRecord.setPassword("testPassword");
+        userRecord.setEmail("test@email.com");
+
+        // Save the UserRecord to database
+        userRepository.save(userRecord);
+
+        // Perform DELETE operation
+        mvc.perform(delete("/user/" + userRecord.getUserId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        // Verify that the user is deleted
+        assertFalse(userRepository.findById(userRecord.getUserId()).isPresent());
+    }
+
 }

@@ -13,8 +13,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-
-
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -59,7 +57,8 @@ public class UserService {
     }
 
     public Optional<User> updateUser(String userId, User updatedUserInfo) {
-        Optional<UserRecord> optionalExistingUser = userRepository.findById(userId);
+
+            Optional<UserRecord> optionalExistingUser = userRepository.findById(userId);
 
         if (optionalExistingUser.isPresent()) {
             UserRecord existingUser = optionalExistingUser.get();
@@ -75,10 +74,6 @@ public class UserService {
         }
         return Optional.empty();
     }
-
-
-
-
 
     public boolean deleteUser(String userId) {
         Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);

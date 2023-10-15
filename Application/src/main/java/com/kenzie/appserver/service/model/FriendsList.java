@@ -34,7 +34,7 @@ public class FriendsList {
         if (friendsIds.contains(friendId)) {
             friendsIds.remove(friendId);
         } else {
-            System.out.println("Friend could not be deleted, throw a custom exception here"); //need to add a custom exception
+            System.out.println("Friend could not be deleted"); //need to add a custom exception
         }
     }
 
